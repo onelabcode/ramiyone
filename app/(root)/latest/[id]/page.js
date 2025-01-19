@@ -27,6 +27,11 @@ export default function Home() {
         getTutorById(id);
         getFeaturedTutors();
      }, []);
+
+     const filteredFeaturedTutors = featuredTutors.filter(
+      (tutor) => tutor.id !== id
+    );
+
   return (
   <>
   {currentTutor&&featuredTutors?  <div className="min-h-screen bg-gray-50">
@@ -46,7 +51,7 @@ export default function Home() {
           </div>
         </article>
 
-        <RecommendedTutorials posts={featuredTutors} />
+        <RecommendedTutorials posts={filteredFeaturedTutors} />
       </main>
     </div>
     :

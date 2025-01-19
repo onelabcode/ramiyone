@@ -17,6 +17,10 @@ useEffect(() => {
     fetchBlogById(id);
     fetchRecommendedBlogs();
 }, [fetchBlogById,id,fetchRecommendedBlogs]);
+
+const filteredRecommendedBlogs = recommendedBlogs.filter(
+  (relatedPost) => relatedPost.id !== id
+);
   return (
     <>
     {singleblog?
@@ -48,13 +52,13 @@ useEffect(() => {
         <div className="mx-auto max-w-4xl">
         <div dangerouslySetInnerHTML={{ __html: singleblog.body }}></div>
 
-          {recommendedBlogs.length > 0 && (
+          {filteredRecommendedBlogs.length > 0 && (
             <div className="mt-16">
               <h2 className="mb-8 text-center text-3xl font-bold text-purple-800">
                 Recommended Posts
               </h2>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {recommendedBlogs.map((relatedPost) => (
+                {filteredRecommendedBlogs.map((relatedPost) => (
                   <BlogCard key={relatedPost.id} post={relatedPost} />
                 ))}
               </div>

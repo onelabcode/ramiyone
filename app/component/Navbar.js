@@ -56,7 +56,10 @@ const Navbar = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [suggestion, setSuggestion] = useState(false);
   const { user, logout } = useAuthStore();
-
+const logouts=()=>{
+logout();
+window.location.href = `/`;
+};
   const FeatureMenu = () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -105,7 +108,7 @@ const Navbar = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="flex items-center text-red-600"
-          onClick={logout}
+          onClick={logouts}
         >
           <LogOut className="mr-2 h-4 w-4" />
           Log Out

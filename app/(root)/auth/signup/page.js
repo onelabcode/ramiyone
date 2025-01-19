@@ -11,7 +11,7 @@ import { AuthHeader } from "../comp/auth-header";
 import { AuthFooter } from "../comp/auth-footer";
 import { UserPlus } from "lucide-react";
 import useAuthStore from "@/app/store/AuthState";
-
+import { useRouter } from "next/navigation";
 import { Toaster } from "sonner";
 
 const formSchema = z.object({
@@ -25,7 +25,7 @@ const formSchema = z.object({
 });
 
 export default function SignUpPage() {
-
+const router = useRouter();
   const {loading,signup,error}=useAuthStore();
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -40,7 +40,7 @@ export default function SignUpPage() {
     try {
       await signup(values.email, values.password, values.name);
         form.reset();
-        window.location.href= `/auth/profile`;
+        router.push("/auth/profile");
     } catch (error) {
         console.error("Unexpected error:", error);
     }
