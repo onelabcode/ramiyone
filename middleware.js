@@ -26,9 +26,11 @@ export async function middleware(request) {
     }
   }
   if (url.pathname.startsWith("/auth/profile")) {
+    if (user){
     if (user.role==='scout'||user.role==='coach') {
       url.pathname = "/";
       return NextResponse.redirect(url);
+    }
     }
   }
 
