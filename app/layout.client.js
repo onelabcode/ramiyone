@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export default function RootLayout({ children }) {
-  const { getProfile, user } = useAuthStore();
+  const { getProfile, user,refreshToken } = useAuthStore();
 
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -30,7 +30,18 @@ export default function RootLayout({ children }) {
     };
     checkAuthentication();
   }, [getProfile]);
-
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      try {
+        await refreshToken();
+      } catch (error) {
+        console.error("Token refresh failed:", error);
+      }
+    }, 13 * 60 * 1000);
+  
+    return () => clearInterval(interval);
+  }, [refreshToken]); 
+  
   return (
     <html lang="en">
       <body

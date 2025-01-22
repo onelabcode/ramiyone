@@ -13,8 +13,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, LogOut, Mail, Shield } from "lucide-react";
 import useAuthStore from "@/app/store/AuthState";
+import { useRouter } from "next/navigation";
 const DashNavbar = () => {
   const { user, logout } = useAuthStore();
+  const router = useRouter(); 
+  const logoutButton = () => {
+    logout(); 
+    router.push("/"); 
+  };
   return (
  <>
  {user&&(
@@ -68,7 +74,7 @@ const DashNavbar = () => {
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="flex items-center text-red-600"
-          onClick={logout}
+          onClick={logoutButton}
         >
           <LogOut className="mr-2 h-4 w-4" />
           Log Out

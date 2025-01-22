@@ -1,14 +1,12 @@
 "use client"
 import { Calendar } from 'lucide-react';
 import Image from 'next/image';
-import ReactMarkdown from 'react-markdown';
 import { BlogCard } from '../components/blog-card';
 import { useParams } from 'next/navigation';
 import { useBlogStore } from '@/app/store/BlogState';
 import Loading from '@/app/component/Loading';
 import { useEffect } from 'react';
 import { format } from 'date-fns';
-
 
 export default function BlogPostEach() {
  const {id}=useParams();
@@ -48,10 +46,10 @@ const filteredRecommendedBlogs = recommendedBlogs.filter(
         </div>
       </div>
 
-      <main className=" mx-auto px-4 py-12">
-        <div className="mx-auto max-w-4xl">
+      <main className=" mx-auto sm:px-4 py-12">
+        <div className="mx-auto w-full sm:max-w-4xl shadow-lg p-5 sm:px-14 sm:pb-14 rounded-md">
         <div dangerouslySetInnerHTML={{ __html: singleblog.body }}></div>
-
+        </div>
           {filteredRecommendedBlogs.length > 0 && (
             <div className="mt-16">
               <h2 className="mb-8 text-center text-3xl font-bold text-purple-800">
@@ -64,7 +62,7 @@ const filteredRecommendedBlogs = recommendedBlogs.filter(
               </div>
             </div>
           )}
-        </div>
+        
       </main>
     </div>
     :

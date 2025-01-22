@@ -13,6 +13,7 @@ import { useTypewriter } from "./components/typeWriter";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // ShadCN Card component
+import { BrandMarquee } from "./BrandFooter/BrandFooter";
 
 const Frontpage = () => {
   const typedText = useTypewriter(
@@ -157,6 +158,7 @@ const Frontpage = () => {
       <TutorialSection />
       <FeaturedSection />
       <VotePage />
+      <BrandMarquee/>
       <Toaster position="bottom-right" theme="light" />
     </>
   );

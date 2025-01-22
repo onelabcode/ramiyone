@@ -62,19 +62,25 @@ const usePlayerStore = create((set) => ({
   },
 
   updatePlayer: async (id, updatedData) => {
+    console.log(updatedData)
     set({ uploading: true });
     try {
-      await axiosB.put(`/api/player/${id}`, updatedData,{
+    const update =   await axiosB.put(`/api/player/${id}`, updatedData,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
+      const response = await axiosB.get(`/api/player/each/${id}`);
+  
       set((state) => ({
         players: state.players.map((player) =>
-          player.id === id ? { ...player, ...updatedData } : player
+          player.id === id ? response.data : player
         ),
+        uploading: false,
       }));
-      set({ uploading: false });
+if( update.status==201){
+ return toast.error(update.data.error);
+}
       toast.success("Player updated successfully");
     } catch (error) {
       console.error("Error updating player:", error);

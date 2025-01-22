@@ -15,6 +15,7 @@ import {
   CheckCircle,
   UserPlus,
   CalendarDays,
+  Layout,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger,TooltipProvider } from '@/components/ui/tooltip';
@@ -29,8 +30,9 @@ const navItems = [
   { id: 6, icon: <Mail size={22} />, label: 'Request', page: 'RequestScoute' },
   { id: 7, icon: <CalendarDays size={22} />, label: 'Trial Request', page: 'trialout' },
   { id: 8, icon: <Edit3 size={22} />, label: 'Content', page: 'ContentCreation' },
-  { id: 9, icon: <PieChart size={22} />, label: 'Announcements', page: 'Announcement' },
-  { id: 10, icon: <Shield size={22} />, label: 'Admin', page: 'Adminpanel' },
+  { id: 9, icon: <Layout size={22} />, label: 'Brand Logo', page: 'BrandLogo' },
+  { id: 10, icon: <PieChart size={22} />, label: 'Announcements', page: 'Announcement' },
+  { id: 11, icon: <Shield size={22} />, label: 'Admin', page: 'Adminpanel' },
 
 ];
 

@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="w-full max-w-screen-xl mx-auto bg-black text-white p-10 rounded-lg shadow-lg border border-gray-700 mt-20">
+    <footer className="w-full max-w-screen-xl mx-auto bg-black text-white p-10 rounded-lg shadow-lg border border-gray-700">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div className="space-x-3 space-y-5">
           <div className="flex items-center gap-3">
@@ -81,7 +81,8 @@ export default function Footer() {
 
       <div className="mt-10 pt-6 border-t border-gray-600">
         <p className="text-center text-base text-gray-400">
-          © 2024 Ramiyone. All rights reserved.
+
+          © 2025 RamiyOne. All rights reserved.
         </p>
       </div>
     </footer>

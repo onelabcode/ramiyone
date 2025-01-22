@@ -22,21 +22,6 @@ import { useEffect } from "react";
 import Loading from "../Loading";
 
 
-const data = [
-  { name: "Jan", value: 400 },
-  { name: "Feb", value: 300 },
-  { name: "Mar", value: 600 },
-  { name: "Apr", value: 800 },
-  { name: "May", value: 700 },
-];
-
-// const pieChartData = [
-//   { name: "Forwards", value: 30 },
-//   { name: "Midfielders", value: 35 },
-//   { name: "Defenders", value: 25 },
-//   { name: "Goalkeepers", value: 10 },
-// ];
-
 const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))'];
 
 export default function Dashboard() {
