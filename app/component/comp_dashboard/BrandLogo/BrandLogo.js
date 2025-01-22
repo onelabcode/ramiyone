@@ -196,12 +196,12 @@ export default function BrandsPage() {
                 <TableRow key={brand.id}>
                   <TableCell>
                     <div className="relative h-10 w-10">
-                      <Image
-                        src={brand.logo}
-                        alt={brand.name}
-                        fill
-                        className="rounded-md object-cover"
-                      />
+                     <img
+    src={brand.logo}
+    alt={brand.name}
+    className="absolute inset-0 w-full h-full rounded-md object-cover"
+    loading="lazy" 
+  />
                     </div>
                   </TableCell>
                   <TableCell className="font-medium">{brand.name}</TableCell>
