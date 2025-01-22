@@ -6,11 +6,11 @@ import { BASE_URL } from "@/lib/env";
 export const metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "RamiyOne",
-    template: "%s | RamiyOne",
+    default: "Ramiyone",
+    template: "%s | Ramiyone",
   },
   description:
-    "RamiyOne scouting is a Digital scouting platform for talented individuals. Discover your potential and connect with like-minded individuals.",
+    "Ramiyone scouting is a Digital scouting platform for talented individuals. Discover your potential and connect with like-minded individuals.",
   alternates: {
     canonical: BASE_URL,
   },
