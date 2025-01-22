@@ -8,7 +8,15 @@ import { Youtube } from "lucide-react";
 
 export function PlayerDetails({ player, onClose }) {
   if (!player) return null;
-
+  function processCountryName(countryName) {
+    const lowerCaseName = countryName.toLowerCase();
+    const words = lowerCaseName.split(" ");
+    if (words.length === 1) {
+      return words[0].slice(0, 2);
+    } else {
+      return words[0][0] + words[1][0];
+    }
+  }
   return (
     <Dialog open={!!player} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl">
@@ -28,7 +36,9 @@ export function PlayerDetails({ player, onClose }) {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <img
-                src={`https://flagcdn.com/24x18/${player.nationality.toLowerCase()}.png`}
+                src={`https://flagcdn.com/w320/${processCountryName(
+                  player.nationality
+                )}.png`}
                 alt={player.nationality}
                 className="w-6 h-4"
               /> 
