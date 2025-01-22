@@ -15,7 +15,7 @@ export const metadata = {
     canonical: BASE_URL,
   },
   icons: {
-    icon: "/biruk.png",
+    icon: "/ramiyone.png",
   },
 };
 

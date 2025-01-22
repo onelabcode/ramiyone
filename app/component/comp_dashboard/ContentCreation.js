@@ -160,7 +160,7 @@ if(!tutors){
               ) : blogs.length > 0 ? (
                 blogs.map((blog, index) => (
                   <div
-                    key={blog.id}
+                    key={index}
                     className="flex items-start space-x-4 p-4 bg-white shadow rounded-md"
                   >
                     <img

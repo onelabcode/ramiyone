@@ -1,6 +1,7 @@
 "use client"
 import Announcement from '@/app/component/comp_dashboard/Announcement';
 import AdminPanel from '@/app/component/comp_dashboard/Authemails';
+import BrandLogo from '@/app/component/comp_dashboard/BrandLogo/BrandLogo';
 import ContentCreation from '@/app/component/comp_dashboard/ContentCreation';
 import SidebarDash from '@/app/component/comp_dashboard/Dashsidebar'
 import Explorefilter from '@/app/component/comp_dashboard/Explorefilter';
@@ -30,6 +31,7 @@ const Dashboard = () => {
   {page === 'PlayerApprove' && <PlayerApprove />}
   {page === 'PlayerRequests'&& <PlayerRequests />}
   {page ==='trialout' && <TrialOut/>} 
+  {page ==='BrandLogo' && <BrandLogo/>} 
     </div>
     </div>
     </>

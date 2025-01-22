@@ -2,20 +2,23 @@
 
 
 import usePlayerStore from "@/app/store/PlayerStore";
+import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { Toaster,toast } from "sonner";
 
 export const EditPlayerForm = ({ onCancel, player }) => {
-  const { updatePlayer, uploading } = usePlayerStore();
+  const { updatePlayer, uploading ,getTeams,teams} = usePlayerStore();
   const [imagePreview, setImagePreview] = useState(player?.image || null);
   const [imageFile, setImageFile] = useState(null);
-
+  useEffect(() => {
+    getTeams();
+  }, [getTeams]);
   const { handleSubmit, register, setValue, reset } = useForm({
     defaultValues: {
       player_id: player.player_id,
-      date_birth: player.date_birth,
+      date_birth:  player.date_birth ? player.date_birth.split("T")[0] : "",
       age: player.age,
       height: player.height,
       weight: player.weight,
@@ -49,7 +52,6 @@ export const EditPlayerForm = ({ onCancel, player }) => {
 
     try {
       await updatePlayer(player.id, formData);
-      toast.success("Player updated successfully!");
       reset();
       onCancel();
     } catch (error) {
@@ -75,7 +77,14 @@ export const EditPlayerForm = ({ onCancel, player }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md h-3/4 overflow-y-auto">
+      <div className="bg-white rounded-lg p-6 w-full max-w-md h-3/4 overflow-y-auto relative">
+      <button
+      onClick={onCancel}
+      className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 hover:scale-105 transition-transform focus:outline-none"
+      aria-label="Close"
+    >
+      <X className="h-5 w-5"/>
+    </button>
         <h2 className="text-xl font-bold mb-4">Edit Player</h2>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -261,16 +270,23 @@ export const EditPlayerForm = ({ onCancel, player }) => {
             >
               Team
             </label>
-            <input
-              {...register("team_name", {
-                required: true,
-              })}
-              type="text"
+            <select
+              {...register("team_name", { required: true })}
               id="team"
-              placeholder="Enter team name"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            />
+            >
+              {teams && teams.length > 0 ? (
+                teams.map((team) => (
+                  <option key={team.id} value={team.team_name}>
+                    {team.team_name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No teams available</option>
+              )}
+            </select>
           </div>
+          
           <div>
             <label
               htmlFor="link"
