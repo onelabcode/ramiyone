@@ -33,12 +33,12 @@ export function PlayerCard({ player }) {
           <div className="absolute top-4 right-4 z-10">
           <div className="relative w-10 h-10 rounded-full bg-white shadow-md overflow-hidden transform transition-transform duration-300 group-hover:scale-110">
   {team?.image ? (
-    <Image
-      src={team.image}
-      alt={`${team.team_name} logo`}
-      fill
-      className="object-cover"
-    />
+    <img
+  src={team.image}
+  alt={`${team.team_name} logo`}
+  className="absolute inset-0 w-full h-full object-cover"
+  loading="lazy" 
+/>
   ) : (
     <div className="flex items-center justify-center w-full h-full bg-gray-100">
       <span className="text-sm text-gray-500">N/A</span>
@@ -48,12 +48,12 @@ export function PlayerCard({ player }) {
 
           </div>
           <div className="relative h-72 bg-gradient-to-b from-blue-500/10 to-blue-900/90">
-            <Image
-              src={player.image}
-              alt={player.player_id}
-              fill
-              className="object-cover transform group-hover:scale-105 transition-transform duration-500"
-            />
+           <img
+    src={player.image}
+    alt={player.player_id}
+    className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+    loading="lazy"
+  />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
           </div>
           
