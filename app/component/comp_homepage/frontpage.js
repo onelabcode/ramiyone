@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FeaturedSection } from "./Blogsection";
 import VotePage from "./TopSearched";
 import TutorialSection from "./TutorPage";
 import { Toaster } from "sonner";
-import { ChevronRight, Trophy, Star, Users } from "lucide-react";
+import { ChevronRight, Trophy, Star, Users, Pause, Play, VolumeX, Volume2 } from "lucide-react";
 import { motion } from "framer-motion";
 import usePlayerStore from "@/app/store/PlayerStore";
 import { useTypewriter } from "./components/typeWriter";
@@ -14,8 +14,16 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // ShadCN Card component
 import { BrandMarquee } from "./BrandFooter/BrandFooter";
+import FeaturedPlayer from "./FeaturedPlayers";
+
 
 const Frontpage = () => {
+  const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+
   const typedText = useTypewriter(
     "advanced scouting platform.",
     60,
@@ -28,6 +36,55 @@ const Frontpage = () => {
   useEffect(() => {
     getTeams();
   }, [getTeams]);
+
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted;
+      setIsMuted(!isMuted);
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current) {
+      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      setProgress(progress);
+    }
+  };
+
+  const handleLoadedMetadata = () => {
+    if (videoRef.current) {
+      setDuration(videoRef.current.duration);
+    }
+  };
+
+
+
+  const handleProgressClick = (e) => {
+    if (videoRef.current) {
+      const progressBar = e.currentTarget;
+      const rect = progressBar.getBoundingClientRect();
+      const pos = (e.clientX - rect.left) / rect.width;
+      videoRef.current.currentTime = pos * videoRef.current.duration;
+    }
+  };
+
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
 
   return (
     <>
@@ -69,10 +126,10 @@ const Frontpage = () => {
           <div className="w-full max-w-[1400px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6 text-center md:text-left">
-                <h1 className="text-5xl sm:text-6xl md:text-[110px] font-extrabold tracking-tight text-gray-900">
-                  DISCOVER
+                <h1 className="text-5xl sm:text-6xl md:text-[109px] font-extrabold tracking-tight text-gray-900">
+                RAMIYONE 
                   <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-green-500 to-purple-600 mt-2">
-                    THE NEXT GEN
+                  DIGITAL SCOUTING
                   </span>
                 </h1>
                 <p className="text-base sm:text-lg text-gray-700 max-w-md mx-auto md:mx-0">
@@ -133,30 +190,81 @@ const Frontpage = () => {
       </div>
 
       <section className="py-10 px-4">
-        <div className="mx-auto max-w-4xl">
-          <Card className="overflow-hidden">
+        <div className="mx-auto max-w-6xl overflow-hidden">
+          
             <div className="aspect-video relative bg-muted">
               <video
-                autoPlay
-                loop
-                muted
+                ref={videoRef}
                 playsInline
-                className="w-full h-full object-cover absolute inset-0"
+                loop
+                autoPlay
+                className="w-full h-full object-cover"
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
               >
-                <source src={"/video.mp4"} type="video/mp4" />
+                <source src="/video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                <h2 className="text-2xl font-semibold mb-2">Join Our Team</h2>
-                <p className="text-white/80">Ramiyone Scouting.</p>
+              
+          
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                <div className="flex flex-col gap-2">
+           
+                  <div 
+                    className="w-full h-1 bg-gray-600 cursor-pointer rounded-full overflow-hidden"
+                    onClick={handleProgressClick}
+                  >
+                    <div 
+                      className="h-full bg-blue-500 transition-all duration-100"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+                  
+                  {/* Controls */}
+                  <div className="flex items-center justify-between text-white">
+                    <div className="flex items-center gap-4">
+                      <button
+                        onClick={togglePlay}
+                        className="p-2 hover:bg-white/20 rounded-full transition"
+                      >
+                        {isPlaying ? (
+                          <Pause className="w-5 h-5" />
+                        ) : (
+                          <Play className="w-5 h-5" />
+                        )}
+                      </button>
+                      <button
+                        onClick={toggleMute}
+                        className="p-2 hover:bg-white/20 rounded-full transition"
+                      >
+                        {isMuted ? (
+                          <VolumeX className="w-5 h-5" />
+                        ) : (
+                          <Volume2 className="w-5 h-5" />
+                        )}
+                      </button>
+                      <div className="text-sm">
+                        {videoRef.current && (
+                          `${formatTime(videoRef.current.currentTime)} / ${formatTime(duration)}`
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="absolute top-0 left-0 right-0 p-6 text-white">
+                <h2 className="text-2xl sm:text-3xl font-semibold mb-2 opacity-40">RAMIYONE</h2>
               </div>
             </div>
-          </Card>
+         
         </div>
       </section>
+
+
+      
       <TutorialSection />
       <FeaturedSection />
+      {/* <FeaturedPlayer/> */}
       <VotePage />
       <BrandMarquee/>
       <Toaster position="bottom-right" theme="light" />

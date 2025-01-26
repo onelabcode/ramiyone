@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Pencil, Trash2, Plus, Link as LinkIcon } from "lucide-react";
 import { useBrandStore } from "@/app/store/BrandsState";
@@ -37,6 +47,8 @@ export default function BrandsPage() {
   } = useBrandStore();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [brandToDelete, setBrandToDelete] = useState(null);
   const [editingBrand, setEditingBrand] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -97,8 +109,17 @@ export default function BrandsPage() {
     setIsOpen(true);
   };
 
-  const handleDelete = async (id) => {
-    await deleteBrand(id);
+  const handleDeleteClick = (brand) => {
+    setBrandToDelete(brand);
+    setIsDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (brandToDelete) {
+      await deleteBrand(brandToDelete.id);
+      setIsDeleteDialogOpen(false);
+      setBrandToDelete(null);
+    }
   };
 
   const handleClose = () => {
@@ -113,10 +134,10 @@ export default function BrandsPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Brand Management</CardTitle>
-          <Dialog open={isOpen}   onOpenChange={(isOpen) => {
-    setIsOpen(isOpen);
-    if (!isOpen) handleClose(); 
-  }}>
+          <Dialog open={isOpen} onOpenChange={(isOpen) => {
+            setIsOpen(isOpen);
+            if (!isOpen) handleClose();
+          }}>
             <DialogTrigger asChild>
               <Button>
                 <Plus className="mr-2 h-4 w-4" />
@@ -227,7 +248,7 @@ export default function BrandsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => handleDelete(brand.id)}
+                      onClick={() => handleDeleteClick(brand)}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -238,7 +259,29 @@ export default function BrandsPage() {
           </Table>
         </CardContent>
       </Card>
- <Toaster position="bottom-right" theme="light" />
+
+      <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the brand
+              {brandToDelete && ` "${brandToDelete.name}"`} and remove it from our servers.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDeleteConfirm}
+              className="bg-red-600 hover:bg-red-700"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <Toaster position="bottom-right" theme="light" />
     </div>
   );
 }

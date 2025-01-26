@@ -3,12 +3,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { UserCog, Users, User } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 
 export default function RoleSelector() {
-
+const  router = useRouter();
   const handleRoleSelect = (role) => {
-    window.location.href = `/auth/profile/${role}`;
+   router.push(`/auth/profile/${role}`);
   };
 
   return (
@@ -39,7 +40,7 @@ export default function RoleSelector() {
         </CardContent>
       </Card>
 
-      <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => window.location.href = `/auth/confirmation?role=user`}>
+      <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={() => router.push(`/auth/confirmation?role=user`)}>
         <CardContent className="flex flex-col items-center space-y-4 pt-6">
           <User className="h-16 w-16 text-primary" />
           <h3 className="text-2xl font-bold">User</h3>

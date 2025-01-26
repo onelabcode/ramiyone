@@ -56,6 +56,14 @@ export default function Footer() {
                 Contact Us
               </Link>
             </li>
+            <li>
+              <Link
+                href="/sample-terms-and-conditions"
+                className="text-base text-gray-400 hover:text-white transition"
+              >
+                Terms & Conditions
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="space-y-4">
@@ -81,7 +89,6 @@ export default function Footer() {
 
       <div className="mt-10 pt-6 border-t border-gray-600">
         <p className="text-center text-base text-gray-400">
-
           © 2025 RamiyOne. All rights reserved.
         </p>
       </div>

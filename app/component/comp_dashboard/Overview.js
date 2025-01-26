@@ -20,13 +20,14 @@ import { Bell, User, Search, Users, Trophy, UserCheck, FileText } from "lucide-r
 import useDashboardStore from "@/app/store/userDashboard";
 import { useEffect } from "react";
 import Loading from "../Loading";
+import useAuthStore from "@/app/store/AuthState";
 
 
 const COLORS = ['hsl(var(--chart-1))', 'hsl(var(--chart-2))', 'hsl(var(--chart-3))', 'hsl(var(--chart-4))'];
 
 export default function Dashboard() {
     const { stats, recentActivities, loading, fetchDashboardData, error,pieChartData,barChartData } = useDashboardStore();
-
+const {user}= useAuthStore();
     useEffect(() => {
       fetchDashboardData(); 
     }, [fetchDashboardData]);
@@ -45,7 +46,9 @@ export default function Dashboard() {
         <main className="flex-1 p-6">
           <div className="space-y-6">
             <div className="flex items-center justify-between">
-              <h1 className="text-2xl font-semibold">Welcome back, John 👋</h1>
+            <h1 className="text-3xl font-extrabold tracking-tight">
+    Welcome back, <span className="text-yellow-300">{user?.username}</span>!
+  </h1>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

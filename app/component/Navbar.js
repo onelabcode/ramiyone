@@ -36,14 +36,16 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { PlayerSearchForm } from "./comp_dashboard/Dashboard_comp/NavbarForm";
 import { PlayerSuggestionDialog } from "./Form/Form_dialog";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NotificationPanel } from "./Notification_bell/Notification_panel";
 import { Favorite_bar } from "./favourite_page/favourite_bar";
 import Image from "next/image";
+import { MdSportsSoccer } from "react-icons/md";
 
 const navItems = [
   { name: "Home", href: "/", icon: Home },
   { name: "Player", href: "/players", icon: Users },
+  { name: "Club", href: "/club", icon: MdSportsSoccer },
   { name: "Blog", href: "/blogs", icon: BookOpen },
   { name: "Latest", href: "/latest", icon: Newspaper },
   { name: "Shop", href: "/shop", icon: ShoppingBag },
@@ -51,6 +53,7 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const [searchOpen, setSearchOpen] = useState(false);
@@ -58,7 +61,7 @@ const Navbar = () => {
   const { user, logout } = useAuthStore();
 const logouts=()=>{
 logout();
-window.location.href = `/`;
+router.push(`/`);
 };
   const FeatureMenu = () => (
     <DropdownMenu>
@@ -103,7 +106,7 @@ window.location.href = `/`;
         </DropdownMenuItem>
         <DropdownMenuItem className="flex items-center">
           <Shield className="mr-2 h-4 w-4" />
-          <span className="capitalize">{user?.role || "User"}</span>
+          <span className="capitalize">{user?.role === "player" ? "User" : user?.role || "User"}</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
@@ -172,7 +175,8 @@ window.location.href = `/`;
             <div className="flex items-center space-x-3">
               {user ? (
                 <div className="flex justify-center items-center">
-                  <Favorite_bar /> <NotificationPanel />
+                  <Favorite_bar /> 
+                  <NotificationPanel />
                   <FeatureMenu />
                 </div>
               ) : (

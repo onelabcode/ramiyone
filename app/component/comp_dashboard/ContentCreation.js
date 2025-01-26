@@ -5,19 +5,30 @@ import { useState } from "react";
 import Loading from "../Loading";
 import { useForm } from "react-hook-form";
 import { BlogDialog } from "./ContentCreation/BlogDialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 import TutorialVideoForm from "./ContentCreation/TutorForm";
 import useTutorStore from "@/app/store/TutorState";
 import { TutorGrid } from "./ContentCreation/TutorGrid";
 import { Toaster } from "sonner";
+
 function BlogForm() {
   const { createBlog, loading, error } = useBlogStore();
   const { handleSubmit, reset, register } = useForm();
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
+
   const onSubmit = (values) => {
     const formData = new FormData();
-
     formData.append("title", values.title);
     formData.append("image", imageFile);
     formData.append("body", values.body);
@@ -26,6 +37,7 @@ function BlogForm() {
     setImagePreview(null);
     reset();
   };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -38,17 +50,12 @@ function BlogForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-1/3 flex flex-col space-y-5"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="w-1/3 flex flex-col space-y-5">
       <div className="space-y-2">
         <label className="block text-sm font-semibold">Blog title</label>
         <input
           name="title"
-          {...register("title", {
-            required: true,
-          })}
+          {...register("title", { required: true })}
           type="text"
           placeholder="Write title"
           className="text-sm pl-5 border-2 border-gray-200 rounded-full p-4 w-full"
@@ -58,9 +65,7 @@ function BlogForm() {
         <label className="block text-sm font-semibold">Blog Image</label>
         <input
           name="image"
-          {...register("image", {
-            required: true,
-          })}
+          {...register("image", { required: true })}
           type="file"
           accept="image/*"
           placeholder="Choose player Image"
@@ -69,11 +74,7 @@ function BlogForm() {
         />
         {imagePreview && (
           <div>
-            <img
-              src={imagePreview}
-              alt="Preview"
-              style={{ width: "100px", height: "100px" }}
-            />
+            <img src={imagePreview} alt="Preview" style={{ width: "100px", height: "100px" }} />
           </div>
         )}
       </div>
@@ -81,9 +82,7 @@ function BlogForm() {
         <label className="block text-sm font-semibold">Body</label>
         <textarea
           name="body"
-          {...register("body", {
-            required: true,
-          })}
+          {...register("body", { required: true })}
           placeholder="Write blog content"
           className="text-sm pl-5 border-2 border-gray-200 rounded-2xl p-4 w-full max-h-32"
         />
@@ -99,6 +98,7 @@ function BlogForm() {
     </form>
   );
 }
+
 export default function ContentCreation() {
   const { deleteBlog } = useBlogStore();
   const [check, setCheck] = useState(true);
@@ -107,14 +107,20 @@ export default function ContentCreation() {
   const { tutors, getTutors } = useTutorStore();
   const [editBlog, setEditBlog] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [blogToDelete, setBlogToDelete] = useState(null);
+
   useEffect(() => {
     getTutors();
     fetchBlogs();
   }, [fetchBlogs]);
-if(!tutors){
-  return <Loading/>
-}
+
+  if (!tutors) {
+    return <Loading />;
+  }
+
   const handleToggle = () => setCheck(!check);
+
   const handleEdit = (blog) => {
     setEditBlog(blog);
     setIsDialogOpen(true);
@@ -124,9 +130,20 @@ if(!tutors){
     setEditBlog(null);
     setIsDialogOpen(false);
   };
-  const handleDelete = (blog) => {
-    deleteBlog(blog.id);
+
+  const handleDeleteClick = (blog) => {
+    setBlogToDelete(blog);
+    setDeleteDialogOpen(true);
   };
+
+  const handleConfirmDelete = () => {
+    if (blogToDelete) {
+      deleteBlog(blogToDelete.id);
+      setBlogToDelete(null);
+      setDeleteDialogOpen(false);
+    }
+  };
+
   return (
     <div className="flex flex-col w-max-h-screen p-6">
       <p className="text-gray-500 text-sm py-3">Overview clubs and player</p>
@@ -159,12 +176,9 @@ if(!tutors){
                 <Loading />
               ) : blogs.length > 0 ? (
                 blogs.map((blog, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start space-x-4 p-4 bg-white shadow rounded-md"
-                  >
+                  <div key={index} className="flex items-start space-x-4 p-4 bg-white shadow rounded-md">
                     <img
-                    alt=""
+                      alt=""
                       src={blog.image || `https://placehold.co/400`}
                       className="w-20 h-20 object-cover bg-gray-200 rounded-full"
                     />
@@ -176,10 +190,7 @@ if(!tutors){
                       <p
                         className="text-sm text-gray-600"
                         dangerouslySetInnerHTML={{
-                          __html:
-                            blog.body.length > 150
-                              ? blog.body.slice(0, 150) + "..."
-                              : blog.body,
+                          __html: blog.body.length > 150 ? blog.body.slice(0, 150) + "..." : blog.body,
                         }}
                       ></p>
                     </div>
@@ -191,7 +202,7 @@ if(!tutors){
                         Edit
                       </button>
                       <button
-                        onClick={() => handleDelete(blog)}
+                        onClick={() => handleDeleteClick(blog)}
                         className="px-3 py-1 text-sm font-medium text-white bg-red-500 rounded-md hover:bg-red-600"
                       >
                         Delete
@@ -202,11 +213,7 @@ if(!tutors){
               ) : (
                 <div className="flex justify-center mt-20">No blog found.</div>
               )}
-              <BlogDialog
-                initialData={editBlog}
-                onClose={handleClose}
-                isOpen={isDialogOpen}
-              />
+              <BlogDialog initialData={editBlog} onClose={handleClose} isOpen={isDialogOpen} />
             </div>
           ) : tutors ? (
             <div className="container mx-auto py-8">
@@ -220,6 +227,24 @@ if(!tutors){
 
         {check ? <BlogForm /> : <TutorialVideoForm />}
       </div>
+
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Blog Post</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this blog post? This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete} className="bg-red-500 hover:bg-red-600">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <Toaster position="bottom-right" theme="light" />
     </div>
   );

@@ -46,12 +46,8 @@ export default function Home() {
   };
 
   const handleRoleChange = (userId, newRole) => {
-    updateUser(userId,newRole)
-    const updatedUsers = users.map((user) =>
-      user.id === userId ? { ...user, role: newRole } : user
-    );
-    setUsers(updatedUsers);
-    setFilteredUsers(updatedUsers);
+    updateUser(userId,newRole);
+ 
   };
 
   const handleDeleteUser = (userId) => {

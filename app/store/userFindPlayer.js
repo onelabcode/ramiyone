@@ -16,10 +16,7 @@ const useFindPlayerStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axiosB.post(`/api/find`, data);
-      set((state) => ({
-        playerRequests: [...state.playerRequests, { ...data, id: response.data.request.id }],
-        loading: false,
-      }));
+     
       toast.success(response.data.message);
     } catch (error) {
       console.error("Error creating player request:", error.message);

@@ -1,29 +1,46 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
+import { X } from "lucide-react";
 
-const positions = [
-  "All",
-  "center-back",
-  "winger",
-  "goalkeeper",
-  "midfielder",
-  "forward",
-  "defender",
-];
+const positions = {
+  goalkeeper: [
+    { value: "gk", label: "Goalkeeper (GK)" },
+  ],
+  defenders: [
+    { value: "cb", label: "Center Back (CB)" },
+    { value: "rb", label: "Right Back (RB)" },
+    { value: "lb", label: "Left Back (LB)" },
+    { value: "rwb", label: "Right Wing Back (RWB)" },
+    { value: "lwb", label: "Left Wing Back (LWB)" },
+  ],
+  midfielders: [
+    { value: "cdm", label: "Defensive Midfielder (CDM)" },
+    { value: "cm", label: "Central Midfielder (CM)" },
+    { value: "cam", label: "Attacking Midfielder (CAM)" },
+    { value: "rm", label: "Right Midfielder (RM)" },
+    { value: "lm", label: "Left Midfielder (LM)" },
+  ],
+  forwards: [
+    { value: "rw", label: "Right Winger (RW)" },
+    { value: "lw", label: "Left Winger (LW)" },
+    { value: "cf", label: "Center Forward (CF)" },
+    { value: "st", label: "Striker (ST)" },
+  ],
+};
 
 const nationalities = [
   { code: "et", name: "Ethiopia" },
@@ -35,120 +52,179 @@ const nationalities = [
   { code: "sd", name: "Sudan" },
   { code: "ot", name: "Other" }
 ];
+
 export function SidebarFilter({
   onPositionChange,
   onTeamChange,
   onNationalityChange,
-  onAgeChange,
+  onAgeRangeChange,
   teams,
   positionValue,
   teamValue,
   nationalityValue,
-  ageValue,
+  ageRange,
 }) {
+  const handlePositionChange = (value) => {
+    onPositionChange(value === "all" ? "all" : value);
+  };
+
+  const handleClearFilters = () => {
+    onPositionChange("all");
+    onTeamChange("all");
+    onNationalityChange("all");
+    onAgeRangeChange({ min: "", max: "" });
+  };
+
+  const hasActiveFilters = 
+    positionValue !== "all" || 
+    teamValue !== "all" || 
+    nationalityValue !== "all" || 
+    ageRange.min !== "" || 
+    ageRange.max !== "";
+
   return (
-    <div className="w-64 bg-white rounded-lg shadow-sm border border-gray-100">
-      <div className="p-4 space-y-4">
-        <Accordion type="single" collapsible className="space-y-2">
-          {/* Position Filter */}
-          <AccordionItem value="position">
-            <AccordionTrigger className="text-sm font-medium">Position</AccordionTrigger>
-            <AccordionContent>
-              <Select value={positionValue} onValueChange={onPositionChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select position" />
-                </SelectTrigger>
-                <SelectContent>
-                  {positions.map((position) => (
-                    <SelectItem key={position} value={position.toLowerCase()}>
-                      {position}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </AccordionContent>
-          </AccordionItem>
-
-          {/* Team Filter */}
-          <AccordionItem value="team">
-            <AccordionTrigger className="text-sm font-medium">Team</AccordionTrigger>
-            <AccordionContent>
-              <Select value={teamValue} onValueChange={onTeamChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select team" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Teams</SelectItem>
-                  {teams.map((team) => (
-                    <SelectItem key={team.id} value={team.team_name}>
-                      {team.team_name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </AccordionContent>
-          </AccordionItem>
-
-          {/* Nationality Filter */}
-          <AccordionItem value="nationality">
-            <AccordionTrigger className="text-sm font-medium">Nationality</AccordionTrigger>
-            <AccordionContent>
-              <Select value={nationalityValue} onValueChange={onNationalityChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select nationality" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Nations</SelectItem>
-                  {nationalities.map((nationality) => (
-                    <SelectItem key={nationality.code} value={nationality.name}>
-                      <div className="flex items-center gap-2">
-                        <img
-                          src={`https://flagcdn.com/24x18/${nationality.code}.png`}
-                          alt={nationality.name}
-                          className="w-6 h-4"
-                        />
-                        {nationality.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </AccordionContent>
-          </AccordionItem>
-
-          {/* Age Filter */}
-          <AccordionItem value="age">
-            <AccordionTrigger className="text-sm font-medium">Age</AccordionTrigger>
-            <AccordionContent>
-              <Select value={ageValue} onValueChange={onAgeChange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Select age range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Ages</SelectItem>
-                  <SelectItem value="u18">Under 18</SelectItem>
-                  <SelectItem value="18-21">18-21</SelectItem>
-                  <SelectItem value="22-25">22-25</SelectItem>
-                  <SelectItem value="25+">25+</SelectItem>
-                </SelectContent>
-              </Select>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-
-        {/* Reset Button */}
-        <Button
-          className="w-full bg-black text-white hover:bg-gray-800"
-          onClick={() => {
-            onPositionChange("all");
-            onTeamChange("all");
-            onNationalityChange("all");
-            onAgeChange("all");
-          }}
-        >
-          Explore all
-        </Button>
+    <Card className="p-6 space-y-6 h-fit lg:sticky top-4 w-full md:w-80">
+      <div className="flex justify-between items-center">
+        <h2 className="text-lg font-semibold">Filters</h2>
+        {hasActiveFilters && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleClearFilters}
+            className="h-8 px-2 text-muted-foreground hover:text-foreground"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Clear all
+          </Button>
+        )}
       </div>
-    </div>
+      <Separator className="mb-6" />
+
+      <div className="space-y-4">
+        <div className="space-y-2">
+          <Label htmlFor="position">Position</Label>
+          <Select value={positionValue} onValueChange={handlePositionChange}>
+            <SelectTrigger id="position">
+              <SelectValue placeholder="Select position" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Positions</SelectItem>
+              <SelectGroup>
+                <SelectLabel>Goalkeeper</SelectLabel>
+                {positions.goalkeeper.map((position) => (
+                  <SelectItem key={position.value} value={position.value}>
+                    {position.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Defenders</SelectLabel>
+                {positions.defenders.map((position) => (
+                  <SelectItem key={position.value} value={position.value}>
+                    {position.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Midfielders</SelectLabel>
+                {positions.midfielders.map((position) => (
+                  <SelectItem key={position.value} value={position.value}>
+                    {position.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+              <SelectGroup>
+                <SelectLabel>Forwards</SelectLabel>
+                {positions.forwards.map((position) => (
+                  <SelectItem key={position.value} value={position.value}>
+                    {position.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="team">Team</Label>
+          <Select value={teamValue} onValueChange={(value) => onTeamChange(value)}>
+            <SelectTrigger id="team">
+              <SelectValue placeholder="Select team" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Teams</SelectItem>
+              {teams?.map((team) => (
+                <SelectItem key={team.id} value={team.team_name}>
+                  {team.team_name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="nationality">Nationality</Label>
+          <Select
+            value={nationalityValue}
+            onValueChange={(value) => onNationalityChange(value)}
+          >
+            <SelectTrigger id="nationality">
+              <SelectValue placeholder="Select nationality" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Nationalities</SelectItem>
+              {nationalities.map((nationality) => (
+                <SelectItem key={nationality.code} value={nationality.name}>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={`https://flagcdn.com/24x18/${nationality.code}.png`}
+                      alt={nationality.name}
+                      className="w-6 h-4"
+                    />
+                    <span>{nationality.name}</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        <div className="space-y-4">
+          <Label>Age Range</Label>
+          <div className="flex gap-4">
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="minAge" className="text-sm text-muted-foreground">
+                Min Age
+              </Label>
+              <Input
+                id="minAge"
+                type="number"
+                placeholder="Min"
+                value={ageRange.min}
+                onChange={(e) =>
+                  onAgeRangeChange({ ...ageRange, min: e.target.value })
+                }
+                className="w-full"
+              />
+            </div>
+            <div className="flex-1 space-y-2">
+              <Label htmlFor="maxAge" className="text-sm text-muted-foreground">
+                Max Age
+              </Label>
+              <Input
+                id="maxAge"
+                type="number"
+                placeholder="Max"
+                value={ageRange.max}
+                onChange={(e) =>
+                  onAgeRangeChange({ ...ageRange, max: e.target.value })
+                }
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Card>
   );
 }

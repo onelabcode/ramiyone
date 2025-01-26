@@ -27,9 +27,8 @@ const useProfileStore = create((set) => ({
 
     try {
       const response = await axiosB.get(`/api/scout/each/${id}`); 
- 
       set({ singleScout: response.data });
-     
+
       return response.data;
     } catch (error) {
       console.error('Error fetching scout profile:', error.message);
