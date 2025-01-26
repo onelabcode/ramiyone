@@ -7,15 +7,17 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import useProfileStore from "@/app/store/coachAndScout";
+import { useRouter } from "next/navigation";
 
 export default function ScoutProfileForm() {
+  const router = useRouter();
   const [profile, setProfile] = useState({});
 const { createScoutProfile,loading}=useProfileStore();
   const handleSubmit = async (e) => {
     e.preventDefault();
   await createScoutProfile(profile,"scout");
   setProfile({});
-    window.location.href= `/auth/confirmation?role=scout`;
+  router.push(`/auth/confirmation?role=scout`);
   };
 
   return (

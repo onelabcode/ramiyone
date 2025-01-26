@@ -10,18 +10,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import useTutorStore from "@/app/store/TutorState";
-import { EditTutorDialog } from "./EditTutorDialog";
 
-
-
-
-export function TutorCard({ tutor ,onEdit}) {
-const {deleteTutor}=useTutorStore();
-    const onDelete=async(id)=>{
-        deleteTutor(id);
-    }
-
+export function TutorCard({ tutor, onEdit, onDelete }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -33,7 +23,7 @@ const {deleteTutor}=useTutorStore();
       <div className="relative aspect-video">
         <a href={tutor.video} target="_blank" rel="noopener noreferrer">
           <img
-            src={tutor.thumbnail||'https://placehold.co/600x400'}
+            src={tutor.thumbnail || 'https://placehold.co/600x400'}
             alt={`tutor image`}
             className="absolute inset-0 w-full h-full object-cover rounded-t-lg text-sm text-gray-200"
           />
@@ -43,14 +33,14 @@ const {deleteTutor}=useTutorStore();
             <Button
               variant="secondary"
               size="sm"
-              onClick={()=>onEdit(tutor)}
+              onClick={() => onEdit(tutor)}
             >
               <Pencil className="h-4 w-4" />
             </Button>
             <Button
               variant="destructive"
               size="sm"
-              onClick={() => onDelete(tutor.id)}
+              onClick={() => onDelete(tutor)}
             >
               <Trash2 className="h-4 w-4" />
             </Button>
@@ -59,7 +49,7 @@ const {deleteTutor}=useTutorStore();
       </div>
       <CardHeader className="space-y-1 p-4">
         <CardTitle className="text-lg line-clamp-1">{tutor.title}</CardTitle>
-        <CardDescription className="line-clamp-2"    dangerouslySetInnerHTML={{ __html: tutor.body }} ></CardDescription>
+        <CardDescription className="line-clamp-2" dangerouslySetInnerHTML={{ __html: tutor.body }}></CardDescription>
       </CardHeader>
     </Card>
   );

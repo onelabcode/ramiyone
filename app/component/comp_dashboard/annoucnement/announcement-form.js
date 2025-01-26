@@ -57,7 +57,7 @@ const { createNotification}=useNotificationStore();
     const notificationData = {
       user_id: selectedUsers.join(','), 
       type: "message",
-      title: 'Announcement',
+      title: 'RAMIYONES',
       body: message,
     };
 

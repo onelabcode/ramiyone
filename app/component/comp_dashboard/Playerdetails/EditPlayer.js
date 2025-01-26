@@ -1,29 +1,60 @@
 "use client";
-
-
 import usePlayerStore from "@/app/store/PlayerStore";
 import { X } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Toaster, toast } from "sonner";
 
-import { Toaster,toast } from "sonner";
+const positions = {
+  goalkeeper: [
+    { value: "gk", label: "Goalkeeper (GK)" },
+  ],
+  defenders: [
+    { value: "cb", label: "Center Back (CB)" },
+    { value: "rb", label: "Right Back (RB)" },
+    { value: "lb", label: "Left Back (LB)" },
+    { value: "rwb", label: "Right Wing Back (RWB)" },
+    { value: "lwb", label: "Left Wing Back (LWB)" },
+  ],
+  midfielders: [
+    { value: "cdm", label: "Defensive Midfielder (CDM)" },
+    { value: "cm", label: "Central Midfielder (CM)" },
+    { value: "cam", label: "Attacking Midfielder (CAM)" },
+    { value: "rm", label: "Right Midfielder (RM)" },
+    { value: "lm", label: "Left Midfielder (LM)" },
+  ],
+  forwards: [
+    { value: "rw", label: "Right Winger (RW)" },
+    { value: "lw", label: "Left Winger (LW)" },
+    { value: "cf", label: "Center Forward (CF)" },
+    { value: "st", label: "Striker (ST)" },
+  ],
+};
 
 export const EditPlayerForm = ({ onCancel, player }) => {
-  const { updatePlayer, uploading ,getTeams,teams} = usePlayerStore();
+  const { updatePlayer, uploading, getTeams, teams } = usePlayerStore();
   const [imagePreview, setImagePreview] = useState(player?.image || null);
   const [imageFile, setImageFile] = useState(null);
+  const [selectedPositions, setSelectedPositions] = useState(() => {
+    // Initialize selected positions from player's current positions
+    const currentPositions = player.position.split("/");
+    return Object.values(positions)
+      .flat()
+      .filter(pos => currentPositions.includes(pos.value));
+  });
+
   useEffect(() => {
     getTeams();
   }, [getTeams]);
-  const { handleSubmit, register, setValue, reset } = useForm({
+
+  const { handleSubmit, register, reset } = useForm({
     defaultValues: {
       player_id: player.player_id,
-      date_birth:  player.date_birth ? player.date_birth.split("T")[0] : "",
+      date_birth: player.date_birth ? player.date_birth.split("T")[0] : "",
       age: player.age,
       height: player.height,
       weight: player.weight,
       nationality: player.nationality,
-      position: player.position,
       preferred_foods: player.preferred_foods,
       team_name: player.team_name,
       youtube_link: player.youtube_link,
@@ -43,7 +74,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
     formData.append("height", data.height);
     formData.append("weight", data.weight);
     formData.append("nationality", data.nationality);
-    formData.append("position", data.position);
+    formData.append("position", selectedPositions.map(pos => pos.value).join("/"));
     formData.append("preferred_foods", data.preferred_foods);
     formData.append("team_name", data.team_name);
     formData.append("youtube_link", data.youtube_link);
@@ -67,24 +98,46 @@ export const EditPlayerForm = ({ onCancel, player }) => {
     }
   };
 
+  const handlePositionChange = (e) => {
+    const value = e.target.value;
+    if (!value) return;
+
+    const [category, positionValue] = value.split(":");
+    const position = Object.values(positions[category]).find(
+      (pos) => pos.value === positionValue
+    );
+
+    if (position && !selectedPositions.some(pos => pos.value === position.value)) {
+      if (selectedPositions.length < 3) {
+        setSelectedPositions((prev) => [...prev, position]);
+      }
+    }
+  };
+
+  const handleRemovePosition = (positionValue) => {
+    setSelectedPositions((prev) =>
+      prev.filter((pos) => pos.value !== positionValue)
+    );
+  };
+
   useEffect(() => {
     return () => {
-      if (imagePreview) {
+      if (imagePreview && imagePreview !== player.image) {
         URL.revokeObjectURL(imagePreview);
       }
     };
-  }, [imagePreview]);
+  }, [imagePreview, player.image]);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md h-3/4 overflow-y-auto relative">
-      <button
-      onClick={onCancel}
-      className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 hover:scale-105 transition-transform focus:outline-none"
-      aria-label="Close"
-    >
-      <X className="h-5 w-5"/>
-    </button>
+        <button
+          onClick={onCancel}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 hover:scale-105 transition-transform focus:outline-none"
+          aria-label="Close"
+        >
+          <X className="h-5 w-5"/>
+        </button>
         <h2 className="text-xl font-bold mb-4">Edit Player</h2>
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
         <div>
@@ -227,22 +280,68 @@ export const EditPlayerForm = ({ onCancel, player }) => {
               Position
             </label>
             <select
-              {...register("position", {
-                required: true,
-              })}
               id="position"
+              onChange={handlePositionChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="center-back">Center-Back</option>
-              <option value="winger">Winger</option>
-              <option value="goalkeeper">Goalkeeper</option>
-              <option value="midfielder">Midfielder</option>
-              <option value="forward">Forward</option>
-              <option value="defender">Defender</option>
+              <option value="">Select Position</option>
+              <optgroup label="Goalkeeper">
+                {positions.goalkeeper.map((pos) => (
+                  <option key={pos.value} value={`goalkeeper:${pos.value}`}>
+                    {pos.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Defenders">
+                {positions.defenders.map((pos) => (
+                  <option key={pos.value} value={`defenders:${pos.value}`}>
+                    {pos.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Midfielders">
+                {positions.midfielders.map((pos) => (
+                  <option key={pos.value} value={`midfielders:${pos.value}`}>
+                    {pos.label}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Forwards">
+                {positions.forwards.map((pos) => (
+                  <option key={pos.value} value={`forwards:${pos.value}`}>
+                    {pos.label}
+                  </option>
+                ))}
+              </optgroup>
             </select>
           </div>
 
-          <div>
+          {selectedPositions.length > 0 && (
+            <div className="mt-4">
+              <h3 className="text-sm font-medium text-gray-700">
+                Selected Positions:
+              </h3>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {selectedPositions.map((position) => (
+                  <div
+                    key={position.value}
+                    className="inline-flex items-center bg-blue-100 text-blue-800 rounded-full px-3 py-1 text-sm"
+                  >
+                    <span>{position.label}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemovePosition(position.value)}
+                      className="ml-2 text-blue-600 hover:text-blue-800"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+<div>
             <label
               htmlFor="preferred_foot"
               className="block text-sm font-medium text-gray-700"
@@ -250,17 +349,13 @@ export const EditPlayerForm = ({ onCancel, player }) => {
               Preferred Foot
             </label>
             <select
-              {...register("preferred_foods")}
+              {...register("preferred_foods", { required: true })}
               id="preferred_foot"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="">Select preferred foot</option>
               <option value="Left">Left</option>
               <option value="Right">Right</option>
             </select>
-            <p className="text-xs text-gray-500 mt-1">
-              Optional: Select "Left" or "Right" as your preferred foot.
-            </p>
           </div>
 
           <div>
@@ -286,7 +381,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
               )}
             </select>
           </div>
-          
+
           <div>
             <label
               htmlFor="link"
@@ -304,6 +399,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Physical Attributes
@@ -314,7 +410,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
                   htmlFor="coach_perspective"
                   className="block text-xs font-medium text-gray-600"
                 >
-                  Coach's perspective
+                  Coach's Perspective
                 </label>
                 <input
                   {...register("coach_perspective", {
@@ -331,7 +427,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
                   htmlFor="playing_history"
                   className="block text-xs font-medium text-gray-600"
                 >
-                  Playing history
+                  Playing History
                 </label>
                 <input
                   {...register("playing_history", {
@@ -339,13 +435,12 @@ export const EditPlayerForm = ({ onCancel, player }) => {
                   })}
                   type="text"
                   id="playing_history"
-                  placeholder="Enter playing history"
+                  placeholder="Enter Playing History"
                   className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
             </div>
           </div>
-
           <div className="flex justify-end space-x-4">
             <button
               type="button"
@@ -359,7 +454,7 @@ export const EditPlayerForm = ({ onCancel, player }) => {
               type="submit"
               className="px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
-              {uploading ? <>uploading</> : <>Save</>}
+              {uploading ? "Uploading..." : "Save"}
             </button>
           </div>
         </form>

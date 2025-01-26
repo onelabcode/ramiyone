@@ -2,19 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 import { useTrialouts } from "@/app/store/TrialStore";
 import usePlayerStore from "@/app/store/PlayerStore";
 import useProfileStore from "@/app/store/coachAndScout";
 import ScoutDetails from "../RequestScoutcomp.js/PlayerDetials/Scoutinfo";
-export default function TrialOut() {
 
-    const {fetchTrialouts,updateTrialout,deleteTrialout,trialouts} = useTrialouts();
+export default function TrialOut() {
+  const { fetchTrialouts, updateTrialout, deleteTrialout, trialouts } = useTrialouts();
   const { fetchScoutById } = useProfileStore();
   const { getPlayerById } = usePlayerStore();
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [scoutNames, setScoutNames] = useState({});
   const [playerNames, setPlayerNames] = useState({});
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [trialoutToDelete, setTrialoutToDelete] = useState(null);
 
   const handlePlayerSelect = (player) => {
     setSelectedPlayer(player);
@@ -23,13 +35,26 @@ export default function TrialOut() {
   const handleStatusUpdate = (scoutId, status) => {
     updateTrialout(scoutId, status);
   };
-  const handleDelete = (scoutId) => {
-    deleteTrialout(scoutId);
-    setSelectedPlayer(null);
+
+  const handleDeleteClick = (scoutId, e) => {
+    e.stopPropagation();
+    setTrialoutToDelete(scoutId);
+    setDeleteDialogOpen(true);
   };
+
+  const handleConfirmDelete = () => {
+    if (trialoutToDelete) {
+      deleteTrialout(trialoutToDelete);
+      setSelectedPlayer(null);
+      setTrialoutToDelete(null);
+      setDeleteDialogOpen(false);
+    }
+  };
+
   useEffect(() => {
     fetchTrialouts();
   }, [fetchTrialouts]);
+
   useEffect(() => {
     const fetchNames = async () => {
       const scoutMap = {};
@@ -38,7 +63,6 @@ export default function TrialOut() {
         for (const request of trialouts) {
           if (!scoutMap[request.scout_id]) {
             const scout = await fetchScoutById(request.scout_id);
-
             scoutMap[request.scout_id] = scout?.name || "Unknown";
           }
           if (!playerMap[request.player_id]) {
@@ -46,7 +70,6 @@ export default function TrialOut() {
             playerMap[request.player_id] = player?.player_id || "Unknown";
           }
         }
-
         setScoutNames(scoutMap);
         setPlayerNames(playerMap);
       } catch (error) {
@@ -60,37 +83,36 @@ export default function TrialOut() {
   }, [trialouts, fetchScoutById, getPlayerById]);
 
   return (
-<div className="">
-<div className="py-5">
-          <h1 className="text-4xl font-bold">Trial Out Requests.</h1>
-        </div>
-<div className="flex gap-8">
-      <div className="flex-1">
-        <div className="overflow-y-auto max-h-[600px]">
-          <table className="w-full text-left border-collapse">
-            <thead className="sticky top-0 z-10 bg-white">
-              <tr>
-                <th className="text-gray-500 p-4 border-b text-sm font-medium">
-                  Scout name
-                </th>
-                <th className="text-gray-500 p-4 border-b text-sm font-medium">
-                  Player name
-                </th>
-                <th className="text-gray-500 p-4 border-b text-sm font-medium">
-                  Request Type
-                </th>
-                <th className="text-gray-500 p-4 border-b text-sm font-medium">
-                  Status
-                </th>
-                <th className="text-gray-500 p-4 border-b text-sm font-medium">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {trialouts.length > 0 ? (
-                trialouts
-                  .map((request,index) => (
+    <div className="">
+      <div className="py-5">
+        <h1 className="text-4xl font-bold">Trial Out Requests</h1>
+      </div>
+      <div className="flex gap-8">
+        <div className="flex-1">
+          <div className="overflow-y-auto max-h-[600px]">
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 z-10 bg-white">
+                <tr>
+                  <th className="text-gray-500 p-4 border-b text-sm font-medium">
+                    Scout name
+                  </th>
+                  <th className="text-gray-500 p-4 border-b text-sm font-medium">
+                    Player name
+                  </th>
+                  <th className="text-gray-500 p-4 border-b text-sm font-medium">
+                    Request Type
+                  </th>
+                  <th className="text-gray-500 p-4 border-b text-sm font-medium">
+                    Status
+                  </th>
+                  <th className="text-gray-500 p-4 border-b text-sm font-medium">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {trialouts.length > 0 ? (
+                  trialouts.map((request, index) => (
                     <tr
                       key={index}
                       className={`hover:bg-gray-50 cursor-pointer ${
@@ -105,9 +127,7 @@ export default function TrialOut() {
                         {playerNames[request.player_id] || "Loading..."}
                       </td>
                       <td className="text-sm">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800`}
-                        >
+                        <span className="px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           Trial Out
                         </span>
                       </td>
@@ -126,9 +146,8 @@ export default function TrialOut() {
                       </td>
                       <td className="p-4 space-x-1">
                         {request.status === "pending" ? (
-                          <>
-                           <div className="flex">
-                           <button
+                          <div className="flex gap-2">
+                            <button
                               className="text-orange-500 border border-orange-500 rounded-lg py-1 px-3 hover:bg-orange-50"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -146,15 +165,11 @@ export default function TrialOut() {
                             >
                               Accept
                             </button>
-                           </div>
-                          </>
+                          </div>
                         ) : (
                           <button
                             className="text-red-500 border border-red-500 rounded-lg py-1 px-3 hover:bg-red-50 transition-all"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDelete(request.id);
-                            }}
+                            onClick={(e) => handleDeleteClick(request.id, e)}
                           >
                             Delete
                           </button>
@@ -162,24 +177,40 @@ export default function TrialOut() {
                       </td>
                     </tr>
                   ))
-              ) : (
-                <tr>
-                  <td colSpan="4" className="text-center py-4 text-gray-500">
-                    No requests available.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center py-4 text-gray-500">
+                      No requests available.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        <div className="w-[400px]">
+          <ScoutDetails scout={selectedPlayer} />
+        </div>
+        <Toaster position="bottom-right" theme="light" />
       </div>
 
-      <div className="w-[400px]">
-        <ScoutDetails scout={selectedPlayer} />
-      </div>
-      <Toaster position="bottom-right" theme="light" />
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the trial out request.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmDelete} className="bg-red-500 hover:bg-red-600">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
-
-</div>
   );
 }

@@ -41,7 +41,7 @@ if(!playerRequests){
       {selectedScout && (
         <ScoutDialog
           scout={selectedScout}
-          open={!!selectedScout}
+          open={selectedScout}
           onOpenChange={() => setSelectedScout(null)}
         />
       )}

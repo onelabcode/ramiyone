@@ -114,11 +114,18 @@ const useAuthStore = create((set) => ({
       throw new Error(errorMessage);
     }
   },
-  updateUser: async (userId,role) => {
+  updateUser: async (userId, role) => {
     set({ loading: true, error: null });
     try {
-      const response= await axiosB.put(`/api/auth/${userId}`,{role});
+      const response = await axiosB.put(`/api/auth/${userId}`, { role });
       toast.success(response.data.message);
+      set((state) => ({
+        ...state,
+        users: state.users.map((user) =>
+          user.id === userId ? { ...user, role } : user
+        ),
+        loading: false,
+      }));
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || "Failed to update User";
@@ -127,6 +134,7 @@ const useAuthStore = create((set) => ({
       throw new Error(errorMessage);
     }
   },
+  
 }));
 
 export default useAuthStore;

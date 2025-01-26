@@ -9,6 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Dialog,
@@ -16,35 +17,79 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { toast, Toaster } from "sonner";
 import useFindPlayerStore from "@/app/store/userFindPlayer";
 import useAuthStore from "@/app/store/AuthState";
 
 const formSchema = z.object({
-  name: z.string(),
-  position: z.string(),
-  height: z.string(),
-  weight: z.string(),
-  age: z.string(),
-  qualities: z.array(z.string()),
+  position: z.string().nonempty("Position must be selected"),
+  minAge: z.string()
+    .transform((val) => parseInt(val, 10))
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 100, {
+      message: "Age must be between 0 and 100",
+    }),
+  maxAge: z.string()
+    .transform((val) => parseInt(val, 10))
+    .refine((val) => !isNaN(val) && val >= 0 && val <= 100, {
+      message: "Age must be between 0 and 100",
+    }),
+  qualities: z.array(z.string()).max(5, "Maximum 5 qualities can be selected").min(1, "At least one quality must be selected"),
 });
 
 const qualities = [
-  { id: "box-to-box", label: "Box-to-Box" },
-  { id: "defensive", label: "Defensive-Minded" },
+  { id: "aerial", label: "Aerial Threat" },
+  { id: "attack-minded", label: "Attack Minded" },
+  { id: "box-to-box", label: "Box to Box" },
+  { id: "pinpoint-crosser", label: "Pinpoint Crosser" },
+  { id: "defensive", label: "Defensive Minded" },
+  { id: "distance-shooter", label: "Distance Shooter" },
+  { id: "dribbler", label: "Dribbler" },
+  { id: "freekick-specialist", label: "Freekick Specialist" },
+  { id: "pacey", label: "Pacey" },
+  { id: "penalty-specialist", label: "Penalty Specialist" },
   { id: "playmaker", label: "Playmaker" },
-  { id: "clinical", label: "Clinical Finisher" },
-  { id: "technical", label: "Technical" },
+  { id: "promising", label: "Promising" },
+  { id: "strong", label: "Strong" },
+  { id: "tall", label: "Tall" },
 ];
+
+const positions = {
+  goalkeeper: [
+    { value: "gk", label: "Goalkeeper (GK)" },
+  ],
+  defenders: [
+    { value: "cb", label: "Center Back (CB)" },
+    { value: "rb", label: "Right Back (RB)" },
+    { value: "lb", label: "Left Back (LB)" },
+    { value: "rwb", label: "Right Wing Back (RWB)" },
+    { value: "lwb", label: "Left Wing Back (LWB)" },
+  ],
+  midfielders: [
+    { value: "cdm", label: "Defensive Midfielder (CDM)" },
+    { value: "cm", label: "Central Midfielder (CM)" },
+    { value: "cam", label: "Attacking Midfielder (CAM)" },
+    { value: "rm", label: "Right Midfielder (RM)" },
+    { value: "lm", label: "Left Midfielder (LM)" },
+  ],
+  forwards: [
+    { value: "rw", label: "Right Winger (RW)" },
+    { value: "lw", label: "Left Winger (LW)" },
+    { value: "cf", label: "Center Forward (CF)" },
+    { value: "st", label: "Striker (ST)" },
+  ],
+};
 
 export function PlayerSearchForm({
   open,
@@ -53,22 +98,43 @@ export function PlayerSearchForm({
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      position: "",
+      minAge: "",
+      maxAge: "",
       qualities: [],
     },
   });
- const {createPlayerRequest}= useFindPlayerStore();
- const { user} =useAuthStore();
+  
+  const { createPlayerRequest } = useFindPlayerStore();
+  const { user } = useAuthStore();
+
   function onSubmit(values) {
-   
     const payload = {
       ...values,
+      age: `${values.minAge}-${values.maxAge}`,
       scout_id: user?.user_id,
     };
-    createPlayerRequest(payload);
-    form.reset({ name: "", position: "", height: "", weight: "", age: "", qualities: [], });
-    onOpenChange(false);
+    // Remove individual age fields before sending
+    delete payload.minAge;
+    delete payload.maxAge;
     
+    createPlayerRequest(payload);
+    form.reset({ position: "", minAge: "", maxAge: "", qualities: [] });
+    onOpenChange(false);
   }
+
+  const handleQualityChange = (checked, qualityId, field) => {
+    if (checked && field.value.length >= 5) {
+      toast.error("Maximum 5 qualities can be selected");
+      return;
+    }
+    
+    if (checked) {
+      field.onChange([...field.value, qualityId]);
+    } else {
+      field.onChange(field.value?.filter((value) => value !== qualityId));
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -77,20 +143,7 @@ export function PlayerSearchForm({
           <DialogTitle>Request Players</DialogTitle>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Name or Description</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Search players..." {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="position"
@@ -104,52 +157,81 @@ export function PlayerSearchForm({
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="goalkeeper">Goalkeeper</SelectItem>
-                      <SelectItem value="defender">Defender</SelectItem>
-                      <SelectItem value="midfielder">Midfielder</SelectItem>
-                      <SelectItem value="forward">Forward</SelectItem>
+                      <SelectGroup>
+                        <SelectLabel>Goalkeeper</SelectLabel>
+                        {positions.goalkeeper.map((position) => (
+                          <SelectItem key={position.value} value={position.value}>
+                            {position.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                      <SelectGroup>
+                        <SelectLabel>Defenders</SelectLabel>
+                        {positions.defenders.map((position) => (
+                          <SelectItem key={position.value} value={position.value}>
+                            {position.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                      <SelectGroup>
+                        <SelectLabel>Midfielders</SelectLabel>
+                        {positions.midfielders.map((position) => (
+                          <SelectItem key={position.value} value={position.value}>
+                            {position.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                      <SelectGroup>
+                        <SelectLabel>Forwards</SelectLabel>
+                        {positions.forwards.map((position) => (
+                          <SelectItem key={position.value} value={position.value}>
+                            {position.label}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                 </FormItem>
               )}
             />
 
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <FormField
                 control={form.control}
-                name="height"
+                name="minAge"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Height</FormLabel>
+                    <FormLabel>Minimum Age</FormLabel>
                     <FormControl>
-                      <Input placeholder="cm" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="Min age"
+                        {...field}
+                        min="0"
+                        max="100"
+                      />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
               <FormField
                 control={form.control}
-                name="weight"
+                name="maxAge"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Weight</FormLabel>
+                    <FormLabel>Maximum Age</FormLabel>
                     <FormControl>
-                      <Input placeholder="kg" {...field} />
+                      <Input
+                        type="number"
+                        placeholder="Max age"
+                        {...field}
+                        min="0"
+                        max="100"
+                      />
                     </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="age"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Age</FormLabel>
-                    <FormControl>
-                      <Input placeholder="years" {...field} />
-                    </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -160,8 +242,8 @@ export function PlayerSearchForm({
               name="qualities"
               render={() => (
                 <FormItem>
-                  <FormLabel>Qualities</FormLabel>
-                  <div className="grid grid-cols-2 gap-2">
+                  <FormLabel>Qualities (Max 5)</FormLabel>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
                     {qualities.map((quality) => (
                       <FormField
                         key={quality.id}
@@ -177,13 +259,7 @@ export function PlayerSearchForm({
                                 <Checkbox
                                   checked={field.value?.includes(quality.id)}
                                   onCheckedChange={(checked) => {
-                                    return checked
-                                      ? field.onChange([...field.value, quality.id])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== quality.id
-                                          )
-                                        );
+                                    handleQualityChange(checked, quality.id, field);
                                   }}
                                 />
                               </FormControl>
@@ -206,6 +282,7 @@ export function PlayerSearchForm({
           </form>
         </Form>
       </DialogContent>
+      <Toaster position="bottom-right" theme="light" />
     </Dialog>
   );
 }
