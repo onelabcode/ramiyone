@@ -14,6 +14,8 @@ import {
 import { User, LogOut, Mail, Shield } from "lucide-react";
 import useAuthStore from "@/app/store/AuthState";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Link from "next/link";
 const DashNavbar = () => {
   const { user, logout } = useAuthStore();
   const router = useRouter(); 
@@ -27,9 +29,17 @@ const DashNavbar = () => {
 
 <div className="flex items-center justify-between pt-4 px-8 mb-6">
 <div className="flex items-center space-x-2">
-  <h1 className="text-black font-semibold text-3xl animate-pulse">
-    RaMiYone
-  </h1>
+<div className="relative w-32 h-9 bg-gray-800 rounded-lg flex items-center justify-center shadow-2xl">
+  <Link href="/" className="flex items-center justify-center w-full h-full">
+    <Image
+      src="/ramiyone.png" 
+      alt="RAMiYoNE Logo"
+      width={160} 
+      height={48}
+      className="object-contain"
+    />
+  </Link>
+</div>
 </div>
 <div className="flex items-center space-x-6">
   {/* <div className="relative">

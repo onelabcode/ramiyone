@@ -31,7 +31,20 @@ const useNotificationStore = create((set) => ({
     }
   },
 
-
+  sendContactForm: async (formData) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await axiosB.post(`/api/notifications/contact`, formData);
+      set({ loading: false });
+      toast.success(response.data.message);
+    } catch (error) {
+      console.error("Error sending contact form:", error.message);
+      set({
+        loading: false,
+      });
+      toast.error("Failed to send your message. Please try again.");
+    }
+  },
   createNotification: async (data) => {
     set({ loading: true, error: null });
     try {
