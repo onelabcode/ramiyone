@@ -7,11 +7,11 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { toast } from "sonner";
+import useNotificationStore from "@/app/store/NotificationState";
+import { toast, Toaster } from "sonner";
 
 export default function ContactPage() {
-  const [isLoading, setIsLoading] = useState(false);
-
+const {sendContactForm,loading}=useNotificationStore();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,35 +21,13 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully! 🎉",
-          description: "We'll get back to you as soon as possible.",
-        });
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        throw new Error("Failed to send message");
-      }
-    } catch (error) {
-      toast({
-        title: "Error sending message",
-        description: "Please try again later or contact us directly.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+toast.success("message has been sent");
+    setFormData({
+      name: "",
+      email: "",
+      subject: "",
+      message: ""
+    })
   };
 
   return (
@@ -85,7 +63,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">Email Us</h3>
-                    <p className="text-gray-600">ramiyone@gmail.com</p>
+                    <p className="text-gray-600">ramiyonelab@gmail.com</p>
                   </div>
                 </div>
 
@@ -171,9 +149,9 @@ export default function ContactPage() {
               <Button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700"
-                disabled={isLoading}
+                disabled={loading}
               >
-                {isLoading ? (
+                {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Sending...
@@ -189,6 +167,7 @@ export default function ContactPage() {
           </Card>
         </div>
       </div>
+      <Toaster position="bottom-right" theme="light" />
     </div>
   );
 }

@@ -7,14 +7,12 @@ import VotePage from "./TopSearched";
 import TutorialSection from "./TutorPage";
 import { Toaster } from "sonner";
 import { ChevronRight, Trophy, Star, Users, Pause, Play, VolumeX, Volume2 } from "lucide-react";
-import { motion } from "framer-motion";
 import usePlayerStore from "@/app/store/PlayerStore";
 import { useTypewriter } from "./components/typeWriter";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; // ShadCN Card component
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; 
 import { BrandMarquee } from "./BrandFooter/BrandFooter";
-import FeaturedPlayer from "./FeaturedPlayers";
 
 
 const Frontpage = () => {
@@ -89,20 +87,12 @@ const Frontpage = () => {
   return (
     <>
       <div className="relative flex overflow-hidden py-3">
-        <motion.div
-          className="flex min-w-full items-center justify-center"
-          animate={{
-            x: [0, -1035],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+        <div
+          className="flex min-w-full items-center justify-center animate-scroll-right"s
         >
           {teams && teams.length > 0
             ? teams.map((logo, idx) => (
-                <div className="flex items-center gap-3 px-4" key={idx}>
+                <div className="flex items-center gap-3 px-4 group" key={idx}>
                   <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-gray-600">
                     <Image
                       src={logo.image}
@@ -118,7 +108,7 @@ const Frontpage = () => {
                 </div>
               ))
             : null}
-        </motion.div>
+        </div>
       </div>
 
       <div className="relative min-h-screen bg-white px-4 sm:px-6 lg:px-8">
@@ -189,82 +179,8 @@ const Frontpage = () => {
         </div>
       </div>
 
-      <section className="py-10 px-4">
-        <div className="mx-auto max-w-6xl overflow-hidden">
-          
-            <div className="aspect-video relative bg-muted">
-              <video
-                ref={videoRef}
-                playsInline
-                loop
-                autoPlay
-                className="w-full h-full object-cover"
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-              >
-                <source src="/video.mp4" type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              
-          
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                <div className="flex flex-col gap-2">
-           
-                  <div 
-                    className="w-full h-1 bg-gray-600 cursor-pointer rounded-full overflow-hidden"
-                    onClick={handleProgressClick}
-                  >
-                    <div 
-                      className="h-full bg-blue-500 transition-all duration-100"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                  
-                  {/* Controls */}
-                  <div className="flex items-center justify-between text-white">
-                    <div className="flex items-center gap-4">
-                      <button
-                        onClick={togglePlay}
-                        className="p-2 hover:bg-white/20 rounded-full transition"
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-5 h-5" />
-                        ) : (
-                          <Play className="w-5 h-5" />
-                        )}
-                      </button>
-                      <button
-                        onClick={toggleMute}
-                        className="p-2 hover:bg-white/20 rounded-full transition"
-                      >
-                        {isMuted ? (
-                          <VolumeX className="w-5 h-5" />
-                        ) : (
-                          <Volume2 className="w-5 h-5" />
-                        )}
-                      </button>
-                      <div className="text-sm">
-                        {videoRef.current && (
-                          `${formatTime(videoRef.current.currentTime)} / ${formatTime(duration)}`
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="absolute top-0 left-0 right-0 p-6 text-white">
-                <h2 className="text-2xl sm:text-3xl font-semibold mb-2 opacity-40">RAMIYONE</h2>
-              </div>
-            </div>
-         
-        </div>
-      </section>
-
-
-      
       <TutorialSection />
       <FeaturedSection />
-      {/* <FeaturedPlayer/> */}
       <VotePage />
       <BrandMarquee/>
       <Toaster position="bottom-right" theme="light" />

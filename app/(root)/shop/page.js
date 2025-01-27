@@ -9,10 +9,10 @@ import Image from "next/image";
 export default function ShopComingSoon() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
+  
       <section className="relative h-[60vh] bg-orange-600">
           <Image
-            src="/placeholder.svg?height=1080&width=1920"
+            src="/football.jpg"
             alt="Football stadium"
             layout="fill"
             objectFit="cover"

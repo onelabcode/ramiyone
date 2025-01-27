@@ -27,7 +27,7 @@ const formSchema = z.object({
 
 export default function SignUpPage() {
   const router = useRouter();
-  const { loading, signup, signInWithGoogle, error } = useAuthStore();
+  const { loading, signup, loginWithGoogle, error } = useAuthStore();
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -51,8 +51,8 @@ export default function SignUpPage() {
 
   const handleGoogleSignUp = async () => {
     try {
-      await signInWithGoogle();
-     router.push(`/auth/profile`);
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`);
+
     } catch (error) {
       console.error("Google sign up error:", error);
     }

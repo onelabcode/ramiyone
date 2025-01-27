@@ -49,7 +49,7 @@ const useAuthStore = create((set) => ({
       throw new Error(errorMessage);
     }
   },
-
+  
   logout: async () => {
     set({ loading: true, error: null });
     try {

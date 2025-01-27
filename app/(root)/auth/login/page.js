@@ -45,8 +45,8 @@ export default function LoginPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
-      router.push(`/`);
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`);
+
     } catch (error) {
       console.error("Google sign in error:", error);
     }
