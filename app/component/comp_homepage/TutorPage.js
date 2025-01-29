@@ -17,15 +17,15 @@ useEffect(() => {
     <main className="min-h-screen">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-3xl md:text-5xl">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-3xl md:text-5xl">
             <span className="block">Catch the Latest Action</span>
             <span className="block text-blue-600">Player Highlights & News</span>
           </h1>
-          <p className="mx-auto mt-3 max-w-md text-base text-gray-500 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl">
+          <p className="mx-auto mt-3 max-w-md text-sm text-gray-500 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl">
           Stay updated with the latest player performances and news. Watch exclusive highlights and explore the stories making waves in the sports world.
           </p>
         </div>
-
+        
         <div className="mt-16">
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">

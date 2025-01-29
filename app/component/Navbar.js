@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
 import useAuthStore from "../store/AuthState";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -122,7 +121,7 @@ router.push(`/`);
 
   return (
     <>
-      <motion.header
+      <header
         className="bg-white shadow-md sticky top-0 z-50"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -196,15 +195,15 @@ router.push(`/`);
             </div>
           </div>
         </div>
-      </motion.header>
-      <motion.div
+      </header>
+      <div
         className={cn(
           "fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity lg:hidden",
           isOpen ? "opacity-100 visible" : "opacity-0 invisible"
         )}
         onClick={() => setIsOpen(false)}
       />
-      <motion.aside
+      <aside
         className={cn(
           "fixed inset-y-0 left-0 bg-white w-64 z-50 shadow-lg transform transition-transform lg:hidden overflow-y-auto",
           isOpen ? "translate-x-0" : "-translate-x-full"
@@ -236,7 +235,7 @@ router.push(`/`);
             ))}
           </nav>
         </div>
-      </motion.aside>
+      </aside>
       <PlayerSearchForm open={searchOpen} onOpenChange={setSearchOpen} />
       <PlayerSuggestionDialog
         open={suggestion}

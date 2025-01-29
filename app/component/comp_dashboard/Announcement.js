@@ -44,7 +44,7 @@ export default function Announcement() {
             <TabsList className="w-full justify-start">
               {roles.map((role) => (
                 <TabsTrigger key={role} value={role} className="capitalize">
-                  {role}s
+                  {role}
                 </TabsTrigger>
               ))}
             </TabsList>
