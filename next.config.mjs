@@ -3,7 +3,7 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ['res.cloudinary.com','localhost','ramiyone.com','api.ramiyone.com','flagcdn.com','via.placeholder.com','placehold.co'], 
+      domains: ['res.cloudinary.com','images.unsplash.com','resources.premierleague.com','localhost','ramiyone.com','api.ramiyone.com','flagcdn.com','via.placeholder.com','placehold.co'], 
     },
   };
   

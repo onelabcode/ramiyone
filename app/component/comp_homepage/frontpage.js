@@ -13,6 +13,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; 
 import { BrandMarquee } from "./BrandFooter/BrandFooter";
+import FeaturedPlayers from "./featuredPlayers/FeaturedPlayers";
+import FeaturedManager from "./FeaturedManager/FeaturedManager";
 
 
 const Frontpage = () => {
@@ -179,10 +181,16 @@ const Frontpage = () => {
         </div>
       </div>
 
+   
+
       <TutorialSection />
       <FeaturedSection />
-      <VotePage />
+      <FeaturedPlayers/>  
+      <FeaturedManager/>
       <BrandMarquee/>
+      
+      
+      {/* <VotePage /> */}
       <Toaster position="bottom-right" theme="light" />
     </>
   );

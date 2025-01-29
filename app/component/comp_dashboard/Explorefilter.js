@@ -12,9 +12,7 @@ import useTopPlayersStore from "@/app/store/VoteState";
 import { toast, Toaster } from "sonner";
 
 const positions = {
-  goalkeeper: [
-    { value: "gk", label: "Goalkeeper (GK)" },
-  ],
+  goalkeeper: [{ value: "gk", label: "Goalkeeper (GK)" }],
   defenders: [
     { value: "cb", label: "Center Back (CB)" },
     { value: "rb", label: "Right Back (RB)" },
@@ -39,7 +37,7 @@ const positions = {
 
 export default function Home() {
   const [selectedPlayer, setSelectedPlayer] = useState(null);
-  const [topPlayers, setTopPlayers] = useState([]);
+  const [topPlayer, setTopPlayer] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [positionFilter, setPositionFilter] = useState("all");
   const [teamFilter, setTeamFilter] = useState("all");
@@ -53,37 +51,24 @@ export default function Home() {
     getTeams();
   }, []);
 
-  const handleSubmitTopPlayers = () => {
-    if (topPlayers.length === 3) {
-      const playerIds = topPlayers.map((player) => player.id);
-      updateTopPlayers(playerIds);
-      setTopPlayers([]);
+  const handleSubmitTopPlayer = () => {
+    if (topPlayer) {
+      updateTopPlayers([topPlayer.id]);
+      setTopPlayer(null);
     } else {
-      toast.alert("Please select exactly 3 players.");
+      toast.alert("Please select a top player.");
     }
   };
 
   const handleToggleTopPlayer = (player) => {
-    setTopPlayers((current) => {
-      if (current.find((p) => p.id === player.id)) {
-        return current.filter((p) => p.id !== player.id);
-      }
-      if (current.length >= 3) {
-        return current;
-      }
-      return [...current, player];
-    });
+    setTopPlayer((current) => (current?.id === player.id ? null : player));
   };
 
-  const isTopPlayer = (player) => {
-    return topPlayers.some((p) => p.id === player.id);
-  };
+  const isTopPlayer = (player) => topPlayer?.id === player.id;
 
   const checkPositionMatch = (playerPosition, filterPosition) => {
     if (filterPosition === "all") return true;
-    
-    // Split player's positions by '/'
-    const playerPositions = playerPosition.toLowerCase().split('/');
+    const playerPositions = playerPosition.toLowerCase().split("/");
     return playerPositions.includes(filterPosition.toLowerCase());
   };
 
@@ -103,8 +88,8 @@ export default function Home() {
     const matchesTeam = teamFilter === "all" || player.team_name === teamFilter;
     const matchesNationality =
       nationalityFilter === "all" || player.nationality === nationalityFilter;
-    const matchesAge = 
-      (!ageRange.min || player.age >= ageRange.min) && 
+    const matchesAge =
+      (!ageRange.min || player.age >= ageRange.min) &&
       (!ageRange.max || player.age <= ageRange.max);
 
     return (
@@ -126,8 +111,8 @@ export default function Home() {
           </div>
 
           <TopPlayersSection
-            topPlayers={topPlayers}
-            handleSubmitTopPlayers={handleSubmitTopPlayers}
+            topPlayer={topPlayer}
+            handleSubmitTopPlayer={handleSubmitTopPlayer}
           />
 
           <div className="flex flex-col gap-6 mb-8">

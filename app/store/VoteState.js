@@ -3,7 +3,7 @@ import { axiosB } from "../libaxios/axios";
 import { toast } from "sonner";
 
 const useTopPlayersStore = create((set) => ({
-  topPlayers: [],
+  topPlayers: null,
   loading: false,
   error: null,
 
@@ -12,7 +12,6 @@ const useTopPlayersStore = create((set) => ({
     try {
       const response = await axiosB.get("/api/top");
       set({ topPlayers: response.data, loading: false });
- 
     } catch (error) {
       set({ error: error.response?.data || "Error fetching top players", loading: false });
     }
@@ -20,10 +19,6 @@ const useTopPlayersStore = create((set) => ({
 
   updateTopPlayers: async (players) => {
 
-    if (players.length !== 3) {
-      set({ error: "Exactly 3 players must be submitted." });
-      return;
-    }
 
     set({ loading: true, error: null });
     try {

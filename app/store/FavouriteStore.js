@@ -9,9 +9,9 @@ const useFavoriteStore = create((set) => ({
     
     try {
       const response = await axiosB.get(`/api/favorite/${userId}`);
-      console.log(response.data);
+ 
       set({ favorites: response.data });
-      console.log(response.data);
+     
     } catch (error) {
       console.error("Error fetching favorites:", error);
       toast.error("Failed to fetch favorites. Please try again.");
@@ -19,7 +19,7 @@ const useFavoriteStore = create((set) => ({
   },
 
   addToFavorites: async (userId, playerId) => {
-    console.log(userId,playerId);
+
     try {
       const response = await axiosB.post(`/api/favorite`, {
         user_id: userId,
