@@ -109,7 +109,7 @@ function FeaturedPlayerCard({ player }) {
       <CardContent>
         <div className="grid sm:grid-cols-2 gap-4 text-sm mb-6">
           {[
-            { label: "Date of Birth", value: {format(new Date(player.date_birth), 'MMM d, h:mm a')} },
+            { label: "Date of Birth", value: player.date_birth.slice("T")[0] },
             { label: "Age", value: player.age },
             { label: "Height", value: player.height },
             { label: "Weight", value: player.weight },
