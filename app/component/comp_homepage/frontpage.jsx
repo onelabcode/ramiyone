@@ -5,17 +5,26 @@ import React, { useEffect, useRef, useState } from "react";
 import { FeaturedSection } from "./Blogsection";
 import VotePage from "./TopSearched";
 import TutorialSection from "./TutorPage";
+
 import { Toaster } from "sonner";
-import { ChevronRight, Trophy, Star, Users, Pause, Play, VolumeX, Volume2 } from "lucide-react";
+import {
+  ChevronRight,
+  Trophy,
+  Star,
+  Users,
+  Pause,
+  Play,
+  VolumeX,
+  Volume2,
+} from "lucide-react";
 import usePlayerStore from "@/app/store/PlayerStore";
 import { useTypewriter } from "./components/typeWriter";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"; 
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { BrandMarquee } from "./BrandFooter/BrandFooter";
 import FeaturedPlayers from "./featuredPlayers/FeaturedPlayers";
 import FeaturedManager from "./FeaturedManager/FeaturedManager";
-
 
 const Frontpage = () => {
   const videoRef = useRef(null);
@@ -37,7 +46,6 @@ const Frontpage = () => {
     getTeams();
   }, [getTeams]);
 
-
   const togglePlay = () => {
     if (videoRef.current) {
       if (isPlaying) {
@@ -58,7 +66,8 @@ const Frontpage = () => {
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      const progress = (videoRef.current.currentTime / videoRef.current.duration) * 100;
+      const progress =
+        (videoRef.current.currentTime / videoRef.current.duration) * 100;
       setProgress(progress);
     }
   };
@@ -68,8 +77,6 @@ const Frontpage = () => {
       setDuration(videoRef.current.duration);
     }
   };
-
-
 
   const handleProgressClick = (e) => {
     if (videoRef.current) {
@@ -83,14 +90,15 @@ const Frontpage = () => {
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
   return (
     <>
       <div className="relative flex overflow-hidden py-3">
         <div
-          className="flex min-w-full items-center justify-center animate-scroll-right"s
+          className="flex min-w-full items-center justify-center animate-scroll-right"
+          s
         >
           {teams && teams.length > 0
             ? teams.map((logo, idx) => (
@@ -119,9 +127,9 @@ const Frontpage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div className="space-y-6 text-center md:text-left">
                 <h1 className="text-5xl sm:text-6xl md:text-[109px] font-extrabold tracking-tight text-gray-900">
-                RAMIYONE 
+                  RAMIYONE
                   <span className="block bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-green-500 to-purple-600 mt-2">
-                  DIGITAL SCOUTING
+                    DIGITAL SCOUTING
                   </span>
                 </h1>
                 <p className="text-base sm:text-lg text-gray-700 max-w-md mx-auto md:mx-0">
@@ -181,15 +189,12 @@ const Frontpage = () => {
         </div>
       </div>
 
-   
-
       <TutorialSection />
       <FeaturedSection />
-      <FeaturedPlayers/>  
-      <FeaturedManager/>
-      <BrandMarquee/>
-      
-      
+      <FeaturedPlayers />
+      <FeaturedManager />
+      <BrandMarquee />
+
       {/* <VotePage /> */}
       <Toaster position="bottom-right" theme="light" />
     </>
