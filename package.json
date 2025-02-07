@@ -34,7 +34,6 @@
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.5.1",
-    "eslint-plugin-react": "^7.37.4",
     "framer-motion": "^11.12.0",
     "globals": "^15.14.0",
     "jose": "^5.9.6",
@@ -66,10 +65,13 @@
     "zustand": "^5.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.7",
+    "@babel/eslint-parser": "^7.26.5",
     "@eslint/eslintrc": "^3",
     "@next/eslint-plugin-next": "^15.1.6",
     "eslint": "^9.19.0",
     "eslint-config-next": "^15.1.6",
+    "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-refresh": "^0.4.18",
     "eslint-plugin-unused-imports": "^4.1.4"
   }
