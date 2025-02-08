@@ -1,6 +1,7 @@
 "use client";
 
 import usePlayerStore from "@app/store/PlayerStore";
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -108,10 +109,11 @@ export const CreateClub = ({ onClose }) => {
               )}
               {imagePreview && (
                 <div>
-                  <img
+                  <Image
                     src={imagePreview}
                     alt="Preview"
-                    style={{ width: "100px", height: "100px" }}
+                    width={100}
+                    height={100}
                   />
                 </div>
               )}

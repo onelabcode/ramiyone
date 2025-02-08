@@ -20,6 +20,7 @@ import useAuthStore from "@app/store/AuthState";
 import { Separator } from "@/components/ui/separator";
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 const formSchema = z
   .object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -78,10 +79,12 @@ export default function SignUpPage() {
           onClick={handleGoogleSignUp}
           disabled={loading}
         >
-          <img
+          <Image
             src="https://www.google.com/favicon.ico"
             alt="Google"
             className="w-5 h-5 mr-2"
+            width={20}
+            height={20}
           />
           Continue with Google
         </Button>

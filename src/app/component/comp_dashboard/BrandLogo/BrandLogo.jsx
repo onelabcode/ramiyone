@@ -184,10 +184,12 @@ export default function BrandsPage() {
                   />
                   {preview && (
                     <div className="mt-2">
-                      <img
+                      <Image
                         src={preview}
                         alt="Image Preview"
                         className="w-20 h-20 object-cover rounded-md"
+                        width={80}
+                        height={80}
                       />
                     </div>
                   )}

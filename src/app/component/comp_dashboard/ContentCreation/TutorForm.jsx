@@ -1,5 +1,6 @@
 "use client";
 import useTutorStore from "@app/store/TutorState";
+import Image from "next/image";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -62,10 +63,11 @@ function TutorialVideoForm() {
           />
           {imagePreview && (
             <div>
-              <img
+              <Image
                 src={imagePreview}
                 alt="Preview"
-                style={{ width: "100px", height: "100px" }}
+                width={100}
+                height={100}
               />
             </div>
           )}

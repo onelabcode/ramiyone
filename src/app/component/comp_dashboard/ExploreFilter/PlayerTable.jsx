@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 function processCountryName(countryName) {
   const lowerCaseName = countryName.toLowerCase();
@@ -50,12 +51,14 @@ export function PlayerTable({
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     alt=""
                     src={`https://flagcdn.com/w320/${processCountryName(
                       player.nationality
                     )}.png`}
                     className="w-6 h-4"
+                    width={24}
+                    height={18}
                   />
                   {player.nationality}
                 </div>

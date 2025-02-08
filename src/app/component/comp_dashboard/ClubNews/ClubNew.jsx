@@ -28,6 +28,7 @@ import {
 
 import { toast } from "sonner";
 import { useClubNewsStore } from "@app/store/ClubNewsState";
+import Image from "next/image";
 
 export default function ClubNewsDashboard() {
   const {
@@ -178,10 +179,12 @@ export default function ClubNewsDashboard() {
                 <TableRow key={item.id}>
                   <TableCell>{item.title}</TableCell>
                   <TableCell>
-                    <img
+                    <Image
                       src={item.image}
                       alt={item.title}
                       className="w-16 h-16 object-cover"
+                      width={64}
+                      height={64}
                     />
                   </TableCell>
                   <TableCell>

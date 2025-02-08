@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useRef } from "react";
+import Image from "next/image";
 
 const nationalities = [
   { code: "et", name: "Ethiopia" },
@@ -131,10 +132,12 @@ export function PlayerFilters({
             {nationalities.map((nationality) => (
               <SelectItem key={nationality.code} value={nationality.name}>
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
                     src={`https://flagcdn.com/24x18/${nationality.code}.png`}
                     alt={nationality.name}
                     className="w-6 h-4 object-cover"
+                    width={24}
+                    height={18}
                   />
                   <span>{nationality.name}</span>
                 </div>

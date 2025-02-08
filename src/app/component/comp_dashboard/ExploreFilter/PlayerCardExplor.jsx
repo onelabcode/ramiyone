@@ -22,10 +22,12 @@ export function PlayerCard({ player, onClick }) {
           <div>
             <h3 className="font-semibold text-lg">{player.player_id}</h3>
             <div className="flex items-center gap-2 mt-1">
-              <img
+              <Image
                 src={`https://flagcdn.com/24x18/${player.nationality.toLowerCase()}.png`}
                 alt={player.nationality}
                 className="w-6 h-4"
+                width={24}
+                height={18}
               />
               <span className="text-sm text-muted-foreground">
                 {player.nationality}

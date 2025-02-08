@@ -34,12 +34,14 @@ export function TopPlayersSection({ topPlayer, handleSubmitTopPlayer }) {
             <CardContent className="p-4">
               <h3 className="font-semibold text-lg">{topPlayer.player_id}</h3>
               <div className="flex items-center gap-2 mt-1">
-                <img
+                <Image
                   src={`https://flagcdn.com/w320/${processCountryName(
                     topPlayer.nationality
                   )}.png`}
                   alt={topPlayer.nationality}
                   className="w-6 h-4"
+                  width={24}
+                  height={18}
                 />
                 <span className="text-sm text-muted-foreground">
                   {topPlayer.team_name}
