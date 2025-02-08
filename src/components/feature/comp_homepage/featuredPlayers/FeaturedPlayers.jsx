@@ -1,31 +1,21 @@
-"use client";
-
-import { useEffect } from "react";
 import Image from "next/image";
 import { Badge, Calendar, ChevronRight } from "lucide-react";
-import { useTransferNewStore } from "services/TransferState";
 import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
 import { Button } from "@components/ui/button";
 import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { format } from "date-fns";
-import useTopPlayersStore from "services/VoteState";
+import { fetchTransfers } from "action/transfer";
+import { fetchTopPlayers } from "action/vote";
 
-export default function Home() {
-  const { fetchTransfers, transfers } = useTransferNewStore();
+export default async function FeaturedPlayers() {
+  const [transfersRes, topPlayersRes] = await Promise.all([
+    fetchTransfers(),
+    fetchTopPlayers(),
+  ]);
 
-  useEffect(() => {
-    fetchTransfers();
-  }, [fetchTransfers]);
+  const transfers = transfersRes.success ? transfersRes.data.transfers : [];
+  const topPlayers = topPlayersRes.success ? topPlayersRes.data.transfers : [];
 
-  const { topPlayers, fetchTopPlayers, loading } = useTopPlayersStore();
-
-  useEffect(() => {
-    fetchTopPlayers();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
   return (
     <main className="min-h-screen">
       <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">

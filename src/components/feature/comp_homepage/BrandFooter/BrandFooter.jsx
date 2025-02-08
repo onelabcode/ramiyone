@@ -1,7 +1,6 @@
-import { useBrandStore } from "services/BrandsState";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { fetchBrands } from "action/brand";
 function SponsorItem({ sponsor }) {
   return (
     <div className="flex flex-col items-center justify-center gap-2">
@@ -21,11 +20,10 @@ function SponsorItem({ sponsor }) {
   );
 }
 
-export function BrandMarquee() {
-  const { brands, fetchBrands, loading } = useBrandStore();
-  useEffect(() => {
-    fetchBrands();
-  }, [fetchBrands]);
+export async function BrandMarquee() {
+  const brandsRes = await fetchBrands();
+  const brands = brandsRes.success ? brandsRes.data : [];
+
   return (
     <section className="w-full py-12 px-4">
       <div className="max-w-7xl mx-auto">
@@ -36,15 +34,13 @@ export function BrandMarquee() {
             </p>
           </div>
           <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600" />
-          {loading ? (
-            <p className="text-center font-medium text-sm">Loading brands...</p>
-          ) : (
+          {
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12 pt-8">
               {brands.map((sponsor, i) => (
                 <SponsorItem key={i} sponsor={sponsor} />
               ))}
             </div>
-          )}
+          }
         </div>
       </div>
     </section>

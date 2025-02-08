@@ -1,56 +1,30 @@
-"use client";
-import { useEffect, useState } from "react";
 import { Trophy } from "lucide-react";
 import { TopSearchedPlayerCard } from "./TopSearchedComp/TopPlayerCard";
-import useTopPlayersStore from "services/VoteState";
-import usePlayerStore from "services/PlayerStore";
-import useAuthStore from "services/AuthState";
-import { toast } from "sonner";
 import { NewsCarousel } from "./Tutor/NewsCarousel";
+import { fetchTopPlayers } from "action/vote";
+import { getPlayerById } from "action/player";
 
-export default function VotePage() {
-  const { fetchTopPlayers, topPlayers, voteForPlayer } = useTopPlayersStore();
-  const { user } = useAuthStore();
-  const [players, setPlayers] = useState([]);
-  const { getPlayerById } = usePlayerStore();
+export default async function VotePage() {
+  const topPlayersRes = await fetchTopPlayers();
+  const topPlayers = topPlayersRes.success ? topPlayersRes.data : [];
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchTopPlayers();
-      } catch (error) {
-        console.error("Error fetching top players:", error);
-      }
-    };
+  const playerDetails = await Promise.all(
+    topPlayers.map(async (topPlayer) => {
+      const player = await getPlayerById(topPlayer.player_id);
+      return player ? { ...player, votes: topPlayer.votes } : null;
+    })
+  );
 
-    fetchData();
-  }, [fetchTopPlayers]);
-
-  useEffect(() => {
-    const fetchPlayerDetails = async () => {
-      if (!topPlayers || topPlayers.length === 0) return;
-
-      try {
-        const playerPromises = topPlayers.map(async (topPlayer) => {
-          const player = await getPlayerById(topPlayer.player_id);
-          return player ? { ...player, votes: topPlayer.votes } : null;
-        });
-        const playerDetails = await Promise.all(playerPromises);
-        setPlayers(playerDetails.filter((player) => player !== null));
-      } catch (error) {
-        console.error("Error fetching player details:", error);
-      }
-    };
-
-    fetchPlayerDetails();
-  }, [topPlayers, getPlayerById]);
+  const players = playerDetails.filter((player) => player !== null);
 
   const handleVote = (playerId) => {
-    if (user?.user_id) {
-      voteForPlayer(user.user_id, playerId);
-    } else {
-      toast.error("Only Registered Users Can vote");
-    }
+    console.log("Voting for player", playerId);
+    // const { user } = useAuthStore();
+    // if (user?.user_id) {
+    //   voteForPlayer(user.user_id, playerId);
+    // } else {
+    //   toast.error("Only Registered Users Can vote");
+    // }
   };
   return (
     <div className="min-h-screen">

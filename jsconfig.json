@@ -5,10 +5,11 @@
       "@app/*": ["./app/*"],
       "@lib/*": ["./lib/*"],
       "@components/*": ["./components/*"]
+      // "@actions/*": ["./actions/*"]
     },
     "moduleResolution": "node", // Resolves imports like Node.js
-    "jsx": "react-jsx", // Allows JSX support in .jsx files
-    "skipLibCheck": true, // Skips type checking of all declaration files
-    "checkJs": true // ✅ Enable JavaScript type checking
+    "jsx": "react-jsx" // Allows JSX support in .jsx files
+    // "skipLibCheck": true // Skips type checking of all declaration files
+    // "checkJs": true // ✅ Enable JavaScript type checking
   }
 }

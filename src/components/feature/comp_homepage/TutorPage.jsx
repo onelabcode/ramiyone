@@ -1,17 +1,14 @@
-"use client";
-
 import { Sparkles } from "lucide-react";
 import TutorCard from "./Tutor/TutorCard";
-import useTutorStore from "services/TutorState";
-import { useEffect } from "react";
 import { CardCarousel } from "./Tutor/CardCarousel";
+import { getTutors } from "action/tutor";
 
-export default function TutorialSection() {
-  const { tutors, getTutors } = useTutorStore();
-
-  useEffect(() => {
-    getTutors();
-  }, [tutors, getTutors]);
+export default async function TutorialSection() {
+  let tutors = [];
+  const res = await getTutors();
+  if (res.success) {
+    tutors = res.data.tutors;
+  }
 
   return (
     <main className="min-h-screen">
@@ -39,7 +36,7 @@ export default function TutorialSection() {
           </div>
           <div className="max-w-[1400px] mx-auto">
             <CardCarousel>
-              {tutors.map((tutor) => (
+              {tutors?.map((tutor) => (
                 <div
                   key={tutor.id}
                   className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"

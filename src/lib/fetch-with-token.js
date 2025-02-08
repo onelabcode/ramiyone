@@ -1,33 +1,31 @@
 "use server";
-
-import { auth } from "@lib/auth/auth";
-
+import { cookies, headers } from "next/headers";
 /**
  * Retrieves the authentication token from the cookies.
  *
  * @returns The authentication token if available, otherwise `undefined`.
  */
-const getToken = async () => {
-  const authToken = await auth();
+export const getHeaders = async () => {
+  const headersList = Object.fromEntries(await headers());
 
-  return authToken?.user?.accessToken
-    ? `Bearer ${authToken.user?.accessToken}`
-    : undefined;
+  return headersList;
 };
 
 /**
  * Fetches a resource with an authentication token.
  *
- * @param input The URL or the request object to fetch.
- * @param init The request options to use.
+ * @param {string | URL | Request} input The URL or the request object to fetch.
+ * @param {RequestInit} init The request options to use.
  * @returns The response of the request.
  * @throws {Error} If there is no valid authentication token.
  */
 export const fetchWithToken = async (input, init) => {
-  const bearerToken = await getToken();
+  const reqHeaders = await getHeaders();
 
-  if (!bearerToken) {
-    throw new Error("Unauthorized. No token found.");
+  const accessToken = (await cookies()).get("accessToken");
+  const refreshToken = (await cookies()).get("refreshToken");
+  if (!accessToken || !refreshToken) {
+    throw new Error("No access token available.");
   }
 
   if (!init) {
@@ -37,7 +35,7 @@ export const fetchWithToken = async (input, init) => {
   // Add the authentication token to the request headers.
   init.headers = {
     ...init.headers,
-    Authorization: bearerToken,
+    ...reqHeaders,
   };
 
   // Perform the request.

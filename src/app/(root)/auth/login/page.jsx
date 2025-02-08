@@ -20,7 +20,7 @@ import { Separator } from "@components/ui/separator";
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 import useAuthStore from "services/AuthState";
-import Image from "next/image";
+import { FcGoogle } from "react-icons/fc";
 
 const formSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -73,13 +73,7 @@ export default function LoginPage() {
           onClick={handleGoogleSignIn}
           disabled={loading}
         >
-          <Image
-            src="https://www.google.com/favicon.ico"
-            alt="Google"
-            className="w-5 h-5 mr-2"
-            width={20}
-            height={20}
-          />
+          <FcGoogle className="w-5 h-5 mr-2" />
           Continue with Google
         </Button>
 

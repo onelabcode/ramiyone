@@ -1,28 +1,19 @@
-"use client";
-
 import { Card } from "@components/ui/card";
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect } from "react";
-import { useClubNewsStore } from "services/ClubNewsState";
-import { useManagerStore } from "services/ManagerState";
+import { fetchAllClubNews } from "action/club";
+import { fetchLatestFeaturedManager } from "action/manager";
 
-export default function FeaturedManager() {
-  const {
-    clubNews,
-    fetchAllClubNews,
-    loading: clubNewsLoading,
-  } = useClubNewsStore();
-  const {
-    featuredManager,
-    fetchLatestFeaturedManager,
-    loading: managerLoading,
-  } = useManagerStore();
+export default async function FeaturedManager() {
+  const [clubNewsRes, featuredManagerRes] = await Promise.all([
+    fetchAllClubNews(),
+    fetchLatestFeaturedManager(),
+  ]);
 
-  useEffect(() => {
-    fetchAllClubNews();
-    fetchLatestFeaturedManager();
-  }, [fetchAllClubNews, fetchLatestFeaturedManager]);
+  const clubNews = clubNewsRes.success ? clubNewsRes.data : [];
+  const featuredManager = featuredManagerRes.success
+    ? featuredManagerRes.data
+    : [];
 
   return (
     <div className="min-h-screen bg-white">
@@ -32,11 +23,7 @@ export default function FeaturedManager() {
             <h2 className="text-[1.75rem] font-bold text-[#37003c] mb-4">
               Featured Manager
             </h2>
-            {managerLoading ? (
-              <Card className="bg-white shadow-sm p-6 text-center text-gray-500">
-                Loading...
-              </Card>
-            ) : featuredManager ? (
+            {featuredManager ? (
               <Card className="bg-white shadow-sm overflow-hidden">
                 <div className="relative bg-gradient-to-br from-white to-gray-100">
                   <div className="pt-16 px-4">
@@ -109,11 +96,7 @@ export default function FeaturedManager() {
                   Club News
                 </h2>
               </div>
-              {clubNewsLoading ? (
-                <Card className="bg-white shadow-sm p-6 text-center text-gray-500">
-                  Loading...
-                </Card>
-              ) : clubNews.length > 0 ? (
+              {clubNews.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-h-[calc(3*280px)] md:max-h-[calc(3*210px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 pr-2">
                   {clubNews.map((news) => (
                     <Link

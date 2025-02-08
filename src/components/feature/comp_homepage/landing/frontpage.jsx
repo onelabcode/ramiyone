@@ -1,34 +1,25 @@
-"use client";
-
 import Image from "next/image";
-import React, { useEffect } from "react";
-import { FeaturedSection } from "../Blogsection";
-import TutorialSection from "../TutorPage";
 
 import { Toaster } from "sonner";
 import { ChevronRight, Trophy, Star, Users } from "lucide-react";
-import usePlayerStore from "services/PlayerStore";
-import { useTypewriter } from "../components/typeWriter";
 import { Button } from "@components/ui/button";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "@components/ui/card";
-import { BrandMarquee } from "../BrandFooter/BrandFooter";
+import { TextTypeAnime } from "./text-type-anime";
+import { getTeams } from "action/player";
+import TutorialSection from "../TutorPage";
+import { FeaturedSection } from "../Blogsection";
 import FeaturedPlayers from "../featuredPlayers/FeaturedPlayers";
 import FeaturedManager from "../FeaturedManager/FeaturedManager";
+import { BrandMarquee } from "../BrandFooter/BrandFooter";
+import VotePage from "../TopSearched";
 
-const Frontpage = () => {
-  const typedText = useTypewriter(
-    "advanced scouting platform.",
-    60,
-    100,
-    4000,
-    4000
-  );
-  const { getTeams, teams } = usePlayerStore();
-
-  useEffect(() => {
-    getTeams();
-  }, [getTeams]);
+const Frontpage = async () => {
+  let teams = [];
+  const res = await getTeams();
+  if (res.success) {
+    teams = res.data.teams;
+  }
 
   return (
     <>
@@ -68,7 +59,7 @@ const Frontpage = () => {
                 </h1>
                 <p className="text-base sm:text-lg text-gray-700 max-w-md mx-auto md:mx-0">
                   Discover the next generation of football talent with our{" "}
-                  {typedText}|
+                  <TextTypeAnime />
                 </p>
                 <div className="flex justify-center md:justify-start space-x-4">
                   <Link href="/players">
@@ -126,10 +117,11 @@ const Frontpage = () => {
       <TutorialSection />
       <FeaturedSection />
       <FeaturedPlayers />
+
       <FeaturedManager />
       <BrandMarquee />
+      <VotePage />
 
-      {/* <VotePage /> */}
       <Toaster position="bottom-right" theme="light" />
     </>
   );
