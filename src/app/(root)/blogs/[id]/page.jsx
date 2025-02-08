@@ -3,8 +3,8 @@ import { Calendar } from "lucide-react";
 import Image from "next/image";
 import { BlogCard } from "../components/blog-card";
 import { useParams } from "next/navigation";
-import { useBlogStore } from "@app/store/BlogState";
-import Loading from "@app/component/Loading";
+import { useBlogStore } from "services/BlogState";
+import Loading from "@components/feature/Loading";
 import { useEffect } from "react";
 import { format } from "date-fns";
 

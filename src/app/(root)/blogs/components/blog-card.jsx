@@ -6,9 +6,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import { Calendar, ArrowRight } from "lucide-react";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@components/ui/tooltip";
 import Link from "next/link";
 import { format } from "date-fns";
 import Image from "next/image";

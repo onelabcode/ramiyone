@@ -1,16 +1,9 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import {
-  User,
-  Flag,
-  Ruler,
-  Weight,
-  Footprints,
-  History,
-} from "lucide-react";
-import usePlayerStore from "@app/store/PlayerStore";
+import { Badge } from "@components/ui/badge";
+import { Card } from "@components/ui/card";
+import { User, Flag, Ruler, Weight, Footprints, History } from "lucide-react";
+import usePlayerStore from "services/PlayerStore";
 import { useEffect, useState } from "react";
 import { FaYoutube } from "react-icons/fa";
 import { MdSportsSoccer } from "react-icons/md";

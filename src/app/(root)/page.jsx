@@ -1,4 +1,4 @@
-import Frontpage from "../component/comp_homepage/frontpage";
+import Frontpage from "@components/feature/comp_homepage/landing/frontpage";
 
 export default function page() {
   return (

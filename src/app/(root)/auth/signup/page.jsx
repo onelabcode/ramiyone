@@ -3,21 +3,21 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/components/ui/form";
+} from "@components/ui/form";
 import { AuthCard } from "../comp/auth-card";
 import { AuthHeader } from "../comp/auth-header";
 import { AuthFooter } from "../comp/auth-footer";
 import { UserPlus } from "lucide-react";
-import useAuthStore from "@app/store/AuthState";
-import { Separator } from "@/components/ui/separator";
+import useAuthStore from "services/AuthState";
+import { Separator } from "@components/ui/separator";
 import { Toaster } from "sonner";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

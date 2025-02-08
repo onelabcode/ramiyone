@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function Pagination({ currentPage, totalPages, onPageChange }) {

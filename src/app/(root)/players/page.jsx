@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { SidebarFilter } from "@app/component/player/SideBarFilter";
-import { SearchBar } from "@app/component/player/SideBar";
-import { PlayerCard } from "@app/component/player/player-card";
-import usePlayerStore from "@app/store/PlayerStore";
-import Loading from "@app/component/Loading";
-import { Button } from "@/components/ui/button";
+import { SidebarFilter } from "@components/feature/player/SideBarFilter";
+import { SearchBar } from "@components/feature/player/SideBar";
+import { PlayerCard } from "@components/feature/player/player-card";
+import usePlayerStore from "services/PlayerStore";
+import Loading from "@components/feature/Loading";
+import { Button } from "@components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export default function Home() {

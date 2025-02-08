@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { SearchInput } from "./components/search-input";
 import { BlogCard } from "./components/blog-card";
-import { useBlogStore } from "@app/store/BlogState";
+import { useBlogStore } from "services/BlogState";
 import { useSearch } from "./components/use-search";
 import { Pagination } from "./components/pagination";
 

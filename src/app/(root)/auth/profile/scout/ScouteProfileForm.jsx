@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import useProfileStore from "@app/store/coachAndScout";
+import { Button } from "@components/ui/button";
+import { Input } from "@components/ui/input";
+import { Textarea } from "@components/ui/textarea";
+import { Card, CardHeader, CardContent } from "@components/ui/card";
+import { Label } from "@components/ui/label";
+import useProfileStore from "services/coachAndScout";
 import { useRouter } from "next/navigation";
 
 export default function ScoutProfileForm() {

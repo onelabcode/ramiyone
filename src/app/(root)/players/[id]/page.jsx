@@ -1,14 +1,14 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
-import usePlayerStore from "@app/store/PlayerStore";
+import { Card } from "@components/ui/card";
+import usePlayerStore from "services/PlayerStore";
 import { PlayerStats } from "./components/player-stats";
 import { PlayerActions } from "./components/player-action";
 import { useEffect, useState } from "react";
-import Loading from "@app/component/Loading";
+import Loading from "@components/feature/Loading";
 import { useParams } from "next/navigation";
-import useAuthStore from "@app/store/AuthState";
-import useFavoriteStore from "@app/store/FavouriteStore";
+import useAuthStore from "services/AuthState";
+import useFavoriteStore from "services/FavouriteStore";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 

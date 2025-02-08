@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth/auth";
+import { auth } from "@lib/auth/auth";
 
 /**
  * Retrieves the authentication token from the cookies.

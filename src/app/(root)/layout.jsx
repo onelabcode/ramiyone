@@ -1,6 +1,6 @@
 "use client";
-import Navbar from "../component/Navbar";
-import Footer from "../component/Footer";
+import Navbar from "../../components/feature/Navbar";
+import Footer from "../../components/feature/Footer";
 const layout = ({ children }) => {
   return (
     <>

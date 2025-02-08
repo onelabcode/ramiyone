@@ -2,12 +2,12 @@
 
 import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import useNotificationStore from "@app/store/NotificationState";
+import { Card } from "@components/ui/card";
+import { Input } from "@components/ui/input";
+import { Textarea } from "@components/ui/textarea";
+import { Button } from "@components/ui/button";
+import { Separator } from "@components/ui/separator";
+import useNotificationStore from "services/NotificationState";
 import { toast, Toaster } from "sonner";
 
 export default function ContactPage() {
@@ -38,8 +38,9 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Have a question or want to work together? We&apos;d love to hear from
-            you. Send us a message and we&apos;ll respond as soon as possible.
+            Have a question or want to work together? We&apos;d love to hear
+            from you. Send us a message and we&apos;ll respond as soon as
+            possible.
           </p>
         </div>
 

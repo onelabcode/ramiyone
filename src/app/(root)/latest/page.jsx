@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "@components/ui/input";
+import { Button } from "@components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@components/ui/card";
 import { Search, Calendar, ArrowRight, X } from "lucide-react";
 import Image from "next/image";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@components/ui/tooltip";
 import Link from "next/link";
-import useTutorStore from "@app/store/TutorState";
-import Loading from "@app/component/Loading";
+import useTutorStore from "services/TutorState";
+import Loading from "@components/feature/Loading";
 import { format } from "date-fns";
 import { Pagination } from "../blogs/components/pagination";
 

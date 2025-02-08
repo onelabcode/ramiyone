@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@/components/ui/card";
+import { Card } from "@components/ui/card";
 import { Timer, TrendingUp, Package, Truck } from "lucide-react";
 import Image from "next/image";
 
@@ -64,9 +64,9 @@ export default function ShopComingSoon() {
             Store Launch Coming Soon
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            We&apos;re putting the finishing touches on your new favorite football
-            store. Sign up above to be the first to know when we launch and get
-            exclusive early access offers.
+            We&apos;re putting the finishing touches on your new favorite
+            football store. Sign up above to be the first to know when we launch
+            and get exclusive early access offers.
           </p>
         </div>
       </div>
