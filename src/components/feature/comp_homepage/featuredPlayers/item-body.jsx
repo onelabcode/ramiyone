@@ -1,6 +1,7 @@
 "use client"; // This ensures Next.js renders it on the client only
 
 export default function ItemBody({ body, className }) {
+  console.log("ItemBody", body);
   return (
     <div
       className={`${className}`}
