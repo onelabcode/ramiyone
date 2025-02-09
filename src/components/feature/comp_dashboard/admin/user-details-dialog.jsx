@@ -6,14 +6,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
+} from "@/components/ui/select";
 import { format } from "date-fns";
 import {
   AlertDialog,
@@ -24,7 +24,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { useState } from "react";
 
 export function UserDetailsDialog({ user, open, onOpenChange, onRoleChange }) {

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Loading from "@components/feature/Loading"; // Assuming this is a spinner/loading component
+import Loading from "@/components/feature/Loading"; // Assuming this is a spinner/loading component
 import useAuthStore from "services/AuthState";
 
 export const withAuth = (Component, allowedRoles) => {

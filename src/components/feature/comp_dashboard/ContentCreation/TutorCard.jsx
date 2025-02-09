@@ -2,13 +2,13 @@
 
 import { Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@components/ui/card";
+} from "@/components/ui/card";
 import Image from "next/image";
 
 export function TutorCard({ tutor, onEdit, onDelete }) {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { axiosB } from "@lib/axios";
+import { axiosB } from "@/lib/axios";
 import { toast } from "sonner";
 const usePlayerStore = create((set) => ({
   players: [],

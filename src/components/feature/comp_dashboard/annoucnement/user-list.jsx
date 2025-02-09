@@ -1,7 +1,7 @@
 "use client";
 
 import useAuthStore from "services/AuthState";
-import { Checkbox } from "@components/ui/checkbox";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
+} from "@/components/ui/table";
 import { Mail, User } from "lucide-react";
 import { useEffect } from "react";
 

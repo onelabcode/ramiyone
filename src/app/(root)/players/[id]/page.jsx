@@ -1,11 +1,11 @@
 "use client";
 
-import { Card } from "@components/ui/card";
+import { Card } from "@/components/ui/card";
 import usePlayerStore from "services/PlayerStore";
 import { PlayerStats } from "./components/player-stats";
 import { PlayerActions } from "./components/player-action";
 import { useEffect, useState } from "react";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 import { useParams } from "next/navigation";
 import useAuthStore from "services/AuthState";
 import useFavoriteStore from "services/FavouriteStore";

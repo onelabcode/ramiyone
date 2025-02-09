@@ -10,15 +10,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@components/ui/form";
+} from "@/components/ui/form";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -27,8 +27,8 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
-import { Checkbox } from "@components/ui/checkbox";
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast, Toaster } from "sonner";
 import useFindPlayerStore from "services/userFindPlayer";
 import useAuthStore from "services/AuthState";

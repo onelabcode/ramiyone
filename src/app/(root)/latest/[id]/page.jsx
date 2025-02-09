@@ -3,7 +3,7 @@
 import { Calendar } from "lucide-react";
 
 import useTutorStore from "services/TutorState";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 import { RecommendedTutorials } from "./latest_component/RecommendedTutorials";
 import { TutorialHero } from "./latest_component/tutorial-hero";
 import { useParams } from "next/navigation";

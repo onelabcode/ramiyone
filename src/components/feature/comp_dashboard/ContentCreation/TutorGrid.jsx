@@ -1,6 +1,6 @@
 "use client";
 
-import { ScrollArea } from "@components/ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { TutorCard } from "./TutorCard";
 import { useState } from "react";
 import { EditTutorDialog } from "./EditTutorDialog";
@@ -14,7 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 export function TutorGrid({ tutors }) {
   const { updateTutor, deleteTutor } = useTutorStore();

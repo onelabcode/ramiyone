@@ -7,10 +7,10 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
-import { Badge } from "@components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@components/ui/avatar";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { PlayerDetails } from "./Playerdetail";
 import useProfileStore from "services/coachAndScout";

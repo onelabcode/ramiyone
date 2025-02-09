@@ -7,8 +7,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
 import { Trash2, Pencil } from "lucide-react";
 import { format } from "date-fns";
 import {
@@ -20,7 +20,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { useState } from "react";
 
 export function UserTable({ users, onUserSelect, onDeleteUser }) {

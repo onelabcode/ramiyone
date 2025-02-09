@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Badge } from "@components/ui/badge";
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Check, X } from "lucide-react";
 import useFindPlayerStore from "services/userFindPlayer";
 import {
@@ -15,7 +15,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 export function PlayerTable({ requests, onScoutClick }) {
   const { updatePlayerRequestStatus, deletePlayerRequest } =

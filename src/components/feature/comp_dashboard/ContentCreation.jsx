@@ -14,7 +14,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 import TutorialVideoForm from "./ContentCreation/TutorForm";
 import useTutorStore from "services/TutorState";

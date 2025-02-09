@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "@components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Timer, TrendingUp, Package, Truck } from "lucide-react";
 import Image from "next/image";
 

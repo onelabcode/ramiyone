@@ -5,8 +5,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
-import { Progress } from "@components/ui/progress";
+} from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 import { Trophy, Goal, Clock, Users, Target, Star } from "lucide-react";
 import Image from "next/image";
 

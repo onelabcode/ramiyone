@@ -1,11 +1,6 @@
-"use client"; // This ensures Next.js renders it on the client only
+"use client";
+import parse from "html-react-parser";
 
 export default function ItemBody({ body, className }) {
-  console.log("ItemBody", body);
-  return (
-    <div
-      className={`${className}`}
-      //   dangerouslySetInnerHTML={{ __html: body }}
-    />
-  );
+  return <div className={className}>{parse(body)}</div>;
 }

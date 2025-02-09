@@ -5,9 +5,9 @@ import { CreateClub } from "./playerClub/PlayerClub";
 import { AddPlayerModal } from "./playerClub/Playeradd";
 import usePlayerStore from "services/PlayerStore";
 import { PlayerStatsModal } from "./Playerdetails/PlayerDetails";
-import { cn } from "@lib/utils";
+import { cn } from "@/lib/utils";
 import { EditPlayerForm } from "./Playerdetails/EditPlayer";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Toaster } from "sonner";
 import {
   AlertDialog,
@@ -18,7 +18,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 export default function PlayerManager() {
   const {

@@ -3,9 +3,9 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
-import { Badge } from "@components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+} from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Briefcase,
   Building2,
@@ -15,7 +15,7 @@ import {
   Trophy,
   User,
 } from "lucide-react";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 import { useEffect } from "react";
 import useProfileStore from "services/coachAndScout";
 

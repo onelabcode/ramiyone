@@ -10,8 +10,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
-import { Input } from "@components/ui/input";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -19,14 +19,14 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@components/ui/form";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 
 import Image from "next/image";
 import useAuthStore from "services/AuthState";

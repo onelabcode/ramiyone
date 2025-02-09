@@ -1,15 +1,15 @@
 "use client";
 
 import { Heart } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@components/ui/sheet";
-import { ScrollArea } from "@components/ui/scroll-area";
+} from "@/components/ui/sheet";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import useFavoriteStore from "services/FavouriteStore";
 import useAuthStore from "services/AuthState";

@@ -62,7 +62,7 @@ export default function loading() {
 import { CircleIcon, Loader2Icon } from "lucide-react";
 
 import { useEffect, useState } from "react";
-import { cn } from "@lib/utils";
+import { cn } from "@/lib/utils";
 export function LoadingSpinner() {
   const [progress, setProgress] = useState(0);
   const [isLoading, setIsLoading] = useState(true);

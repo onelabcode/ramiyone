@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 import { EditTutorForm } from "./EditTutorForm";
 
 export function EditTutorDialog({ tutor, open, onOpenChange, onSave }) {
