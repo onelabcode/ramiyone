@@ -12,7 +12,6 @@ import { FeaturedSection } from "../Blogsection";
 import FeaturedPlayers from "../featuredPlayers/FeaturedPlayers";
 import FeaturedManager from "../FeaturedManager/FeaturedManager";
 import { BrandMarquee } from "../BrandFooter/BrandFooter";
-import VotePage from "../TopSearched";
 
 const Frontpage = async () => {
   let teams = [];
@@ -120,7 +119,7 @@ const Frontpage = async () => {
 
       <FeaturedManager />
       <BrandMarquee />
-      <VotePage />
+      {/* <VotePage /> */}
 
       <Toaster position="bottom-right" theme="light" />
     </>

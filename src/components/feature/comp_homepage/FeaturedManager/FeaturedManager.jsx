@@ -120,11 +120,9 @@ export default async function FeaturedManager() {
                           <div className="text-xs uppercase tracking-wider text-gray-600 mb-2">
                             Club News
                           </div>
-                          <Link href={news.link}>
-                            <h3 className="font-semibold text-[#37003c] text-sm line-clamp-2 group-hover:text-purple-700 transition-colors hover:underline">
-                              {news.title}
-                            </h3>
-                          </Link>
+                          <h3 className="font-semibold text-[#37003c] text-sm line-clamp-2 group-hover:text-purple-700 transition-colors hover:underline">
+                            {news.title}
+                          </h3>
                         </div>
                       </Card>
                     </Link>

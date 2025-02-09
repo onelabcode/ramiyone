@@ -6,10 +6,11 @@ import { getPlayerById } from "action/player";
 
 export default async function VotePage() {
   const topPlayersRes = await fetchTopPlayers();
+  console.log("Top Players", topPlayersRes);
   const topPlayers = topPlayersRes.success ? topPlayersRes.data : [];
 
   const playerDetails = await Promise.all(
-    topPlayers.map(async (topPlayer) => {
+    topPlayers?.map(async (topPlayer) => {
       const player = await getPlayerById(topPlayer.player_id);
       return player ? { ...player, votes: topPlayer.votes } : null;
     })
