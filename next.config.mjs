@@ -8,6 +8,8 @@ const nextConfig = {
       { protocol: "https", hostname: "resources.premierleague.com" },
       { protocol: "http", hostname: "localhost" },
       { protocol: "https", hostname: "ramiyone.com" },
+      { protocol: "http", hostname: "ramiyone.com" },
+      { protocol: "http", hostname: "api.ramiyone.com" },
       { protocol: "https", hostname: "api.ramiyone.com" },
       { protocol: "https", hostname: "flagcdn.com" },
       { protocol: "https", hostname: "via.placeholder.com" },

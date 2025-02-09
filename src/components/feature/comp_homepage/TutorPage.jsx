@@ -7,7 +7,7 @@ export default async function TutorialSection() {
   let tutors = [];
   const res = await getTutors();
   if (res.success) {
-    tutors = res.data.tutors;
+    tutors = res.data;
   }
 
   return (

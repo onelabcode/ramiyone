@@ -1,5 +1,3 @@
-"use client";
-
 import { Calendar } from "lucide-react";
 import { Button } from "@components/ui/button";
 import Link from "next/link";
@@ -36,12 +34,9 @@ export function NewsCard({ id, title, body, image, created_at, className }) {
             <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text text-transparent">
               {title}
             </h3>
-            <p
-              className="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3"
-              dangerouslySetInnerHTML={{
-                __html: body.length > 150 ? body.slice(0, 150) + "..." : body,
-              }}
-            />
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed line-clamp-3">
+              {body.length > 150 ? body.slice(0, 150) + "..." : body}
+            </p>
           </div>
           <Link href={`/blogs/${id}`}>
             <Button className="w-fit bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white">

@@ -1,5 +1,5 @@
 "use server";
-import { cookies, headers } from "next/headers";
+import { headers } from "next/headers";
 /**
  * Retrieves the authentication token from the cookies.
  *
@@ -21,12 +21,6 @@ export const getHeaders = async () => {
  */
 export const fetchWithToken = async (input, init) => {
   const reqHeaders = await getHeaders();
-
-  const accessToken = (await cookies()).get("accessToken");
-  const refreshToken = (await cookies()).get("refreshToken");
-  if (!accessToken || !refreshToken) {
-    throw new Error("No access token available.");
-  }
 
   if (!init) {
     return fetch(input);

@@ -6,6 +6,7 @@ import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import { format } from "date-fns";
 import { fetchTransfers } from "action/transfer";
 import { fetchTopPlayers } from "action/vote";
+import ItemBody from "./item-body";
 
 export default async function FeaturedPlayers() {
   const [transfersRes, topPlayersRes] = await Promise.all([
@@ -13,8 +14,8 @@ export default async function FeaturedPlayers() {
     fetchTopPlayers(),
   ]);
 
-  const transfers = transfersRes.success ? transfersRes.data.transfers : [];
-  const topPlayers = topPlayersRes.success ? topPlayersRes.data.transfers : [];
+  const transfers = transfersRes.success ? transfersRes.data : [];
+  const topPlayers = topPlayersRes.success ? topPlayersRes.data : [];
 
   return (
     <main className="min-h-screen">
@@ -144,9 +145,9 @@ function LatestTransfers({ transfers }) {
                     <h3 className="font-semibold text-purple-900 text-xl line-clamp-2 hover:text-purple-700 cursor-pointer">
                       {item.title}
                     </h3>
-                    <div
+                    <ItemBody
                       className="text-sm text-gray-600 line-clamp-2 prose prose-sm"
-                      dangerouslySetInnerHTML={{ __html: item.body }}
+                      body={item.body}
                     />
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <Calendar className="h-4 w-4" />
@@ -196,9 +197,9 @@ function LatestTransfers({ transfers }) {
                       </div>
                     </div>
                     <div className="p-4 space-y-3 bg-white">
-                      <div
+                      <ItemBody
                         className="text-sm text-gray-600 line-clamp-2 prose prose-sm"
-                        dangerouslySetInnerHTML={{ __html: item.body }}
+                        body={item.body}
                       />
                       <div className="flex items-center gap-2 text-sm text-gray-500">
                         <Calendar className="h-3 w-3" />

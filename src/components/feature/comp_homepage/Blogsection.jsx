@@ -7,7 +7,7 @@ export async function FeaturedSection() {
   let blogs = [];
   const res = await fetchBlogs();
   if (res.success) {
-    blogs = res.data.blogs;
+    blogs = res.data;
   }
 
   return (
