@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@lib/utils";
+import { cn } from "@/lib/utils";
 import { Trash2, CheckCircle, Circle } from "lucide-react";
 import { useState } from "react";
 import { format } from "date-fns";

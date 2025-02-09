@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import usePlayerStore from "services/PlayerStore";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 
 const teamColors = [
   "border-red-500",

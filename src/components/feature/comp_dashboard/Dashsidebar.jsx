@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@lib/utils";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Users,
@@ -20,13 +20,13 @@ import {
   Building,
   UserCog,
 } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
   TooltipProvider,
-} from "@components/ui/tooltip";
+} from "@/components/ui/tooltip";
 
 const navItems = [
   {

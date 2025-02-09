@@ -3,8 +3,8 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import useAuthStore from "../../services/AuthState";
-import { Button } from "@components/ui/button";
-import { cn } from "@lib/utils";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,7 +12,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   User,
   LogOut,

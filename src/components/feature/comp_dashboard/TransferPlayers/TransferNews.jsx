@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Percent as Soccer, Plus, Trash2, Edit2, Calendar } from "lucide-react";
 import {
   Dialog,
@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 import dynamic from "next/dynamic";
 import "react-quill-new/dist/quill.snow.css";
 import { useTransferNewStore } from "services/TransferState"; // Updated Zustand store import

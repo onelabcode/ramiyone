@@ -11,7 +11,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 
 import { useTrialouts } from "services/TrialStore";
 import usePlayerStore from "services/PlayerStore";

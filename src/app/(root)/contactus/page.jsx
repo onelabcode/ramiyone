@@ -2,11 +2,11 @@
 
 import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { Card } from "@components/ui/card";
-import { Input } from "@components/ui/input";
-import { Textarea } from "@components/ui/textarea";
-import { Button } from "@components/ui/button";
-import { Separator } from "@components/ui/separator";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import useNotificationStore from "services/NotificationState";
 import { toast, Toaster } from "sonner";
 

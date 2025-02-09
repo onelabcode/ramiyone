@@ -1,6 +1,6 @@
 "use client";
 
-import { Label } from "@components/ui/label";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -9,11 +9,11 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
-import { Input } from "@components/ui/input";
-import { Card } from "@components/ui/card";
-import { Separator } from "@components/ui/separator";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import Image from "next/image";
 

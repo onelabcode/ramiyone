@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { Input } from "@components/ui/input";
-import { Button } from "@components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
   CardContent,
-} from "@components/ui/card";
+} from "@/components/ui/card";
 import {
   Table,
   TableHeader,
@@ -15,7 +15,7 @@ import {
   TableHead,
   TableBody,
   TableCell,
-} from "@components/ui/table";
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogTrigger,
@@ -24,7 +24,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 
 import { toast } from "sonner";
 import { useClubNewsStore } from "services/ClubNewsState";

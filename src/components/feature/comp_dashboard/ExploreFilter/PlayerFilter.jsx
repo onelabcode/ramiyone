@@ -8,10 +8,10 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@components/ui/select";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Button } from "@components/ui/button";
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useRef } from "react";
 import Image from "next/image";

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
-import { Input } from "@components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Input } from "@/components/ui/input";
 import { Search, Users } from "lucide-react";
 import NotificationForm from "./annoucnement/announcement-form";
 import UserList from "./annoucnement/user-list";

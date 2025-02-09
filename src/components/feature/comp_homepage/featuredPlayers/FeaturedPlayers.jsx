@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { Badge, Calendar, ChevronRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
-import { Button } from "@components/ui/button";
-import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import { fetchTransfers } from "action/transfer";
 import { fetchTopPlayers } from "action/vote";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export function StatusFilter({ currentStatus, onStatusChange, counts }) {
   const statuses = ["all", "pending", "approved", "declined"];

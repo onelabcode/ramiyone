@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 
 import { Youtube } from "lucide-react";
 import Image from "next/image";

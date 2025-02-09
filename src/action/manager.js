@@ -1,7 +1,7 @@
 "use server";
 
-import { API_URL } from "@lib/env";
-import { fetchWithToken } from "@lib/fetch-with-token";
+import { API_URL } from "@/lib/env";
+import { fetchWithToken } from "@/lib/fetch-with-token";
 import { handleResponse } from "./utils";
 
 // Fetch all managers

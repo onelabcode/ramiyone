@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,7 +8,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
+} from "@/components/ui/table";
 import { formatDistanceToNow } from "date-fns";
 import { Eye, UserCheck, UserX } from "lucide-react";
 export function ScoutTable({ scouts, onViewDetails, onStatusChange }) {

@@ -1,16 +1,16 @@
 "use client";
 
 import { User, Calendar, ChevronDown, Users } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import useAuthStore from "services/AuthState";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 import { useRequests } from "services/RequestState";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { useTrialouts } from "services/TrialStore";
 
 export function PlayerActions({ SinglePlayerId }) {

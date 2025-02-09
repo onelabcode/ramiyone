@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { toast } from "sonner";
-import { axiosB } from "@lib/axios";
+import { axiosB } from "@/lib/axios";
 
 export const useClubNewsStore = create((set) => ({
   clubNews: [], // Array to store all club news

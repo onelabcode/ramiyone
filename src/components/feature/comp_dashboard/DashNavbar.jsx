@@ -1,6 +1,6 @@
 "use client";
-import { Button } from "@components/ui/button";
-import { Avatar, AvatarFallback } from "@components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { User, LogOut, Mail, Shield } from "lucide-react";
 import useAuthStore from "services/AuthState";
 import { useRouter } from "next/navigation";

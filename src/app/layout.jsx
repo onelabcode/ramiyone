@@ -1,7 +1,7 @@
 import RootLayout from "./layout.client";
 import ServerLayout from "./layout.server";
 
-import { BASE_URL } from "@lib/env";
+import { BASE_URL } from "@/lib/env";
 
 export const metadata = {
   metadataBase: new URL(BASE_URL),

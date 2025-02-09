@@ -1,7 +1,7 @@
 import { Calendar } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { cn } from "@lib/utils";
+import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import Image from "next/image";
 

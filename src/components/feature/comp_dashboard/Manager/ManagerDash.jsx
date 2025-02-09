@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogTrigger,
@@ -15,10 +15,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "@components/ui/dialog";
-import { Input } from "@components/ui/input";
-import { Label } from "@components/ui/label";
-import { Switch } from "@components/ui/switch";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { Toaster } from "sonner";
 import { useManagerStore } from "services/ManagerState";
 import Image from "next/image";

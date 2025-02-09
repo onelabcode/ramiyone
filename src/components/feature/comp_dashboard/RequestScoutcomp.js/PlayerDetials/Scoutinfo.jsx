@@ -1,14 +1,14 @@
 "use client";
 
-import { Card } from "@components/ui/card";
-import { Avatar } from "@components/ui/avatar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Avatar } from "@/components/ui/avatar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { User } from "lucide-react";
 import { useEffect } from "react";
 import useProfileStore from "services/coachAndScout";
 import usePlayerStore from "services/PlayerStore";
 import Image from "next/image";
-import Loading from "@components/feature/Loading";
+import Loading from "@/components/feature/Loading";
 
 export default function ScoutDetails({ scout }) {
   const { fetchScoutById, singleScout } = useProfileStore();

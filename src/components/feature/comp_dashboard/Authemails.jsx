@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import { UserSearch } from "./admin/user-search";
 import { RoleFilter } from "./admin/user-filter";

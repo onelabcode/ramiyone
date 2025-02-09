@@ -2,16 +2,16 @@ import Image from "next/image";
 
 import { Toaster } from "sonner";
 import { ChevronRight, Trophy, Star, Users } from "lucide-react";
-import { Button } from "@components/ui/button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardHeader, CardTitle, CardContent } from "@components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { TextTypeAnime } from "./text-type-anime";
 import { getTeams } from "action/player";
 import TutorialSection from "../TutorPage";
 import { FeaturedSection } from "../Blogsection";
 import FeaturedPlayers from "../featuredPlayers/FeaturedPlayers";
 import FeaturedManager from "../FeaturedManager/FeaturedManager";
-import { BrandMarquee } from "../BrandFooter/BrandFooter";
+import { SponsorCarousel } from "../BrandFooter/sponsor-carousel";
 
 const Frontpage = async () => {
   let teams = [];
@@ -118,7 +118,7 @@ const Frontpage = async () => {
       <FeaturedPlayers />
 
       <FeaturedManager />
-      <BrandMarquee />
+      <SponsorCarousel />
       {/* <VotePage /> */}
 
       <Toaster position="bottom-right" theme="light" />

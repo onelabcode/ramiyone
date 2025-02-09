@@ -1,7 +1,7 @@
 "use client";
 
-import { Badge } from "@components/ui/badge";
-import { Card } from "@components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
 import { User, Flag, Ruler, Weight, Footprints, History } from "lucide-react";
 import usePlayerStore from "services/PlayerStore";
 import { useEffect, useState } from "react";

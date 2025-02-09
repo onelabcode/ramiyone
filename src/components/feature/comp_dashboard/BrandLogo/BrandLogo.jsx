@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@components/ui/button";
-import { Input } from "@components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -11,14 +11,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@components/ui/table";
+} from "@/components/ui/table";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,8 +28,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@components/ui/alert-dialog";
-import { Label } from "@components/ui/label";
+} from "@/components/ui/alert-dialog";
+import { Label } from "@/components/ui/label";
 import { Pencil, Trash2, Plus, Link as LinkIcon } from "lucide-react";
 import { useBrandStore } from "services/BrandsState";
 import Image from "next/image";
