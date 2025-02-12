@@ -1,12 +1,13 @@
 import Image from "next/image";
-import { Badge, Calendar, ChevronRight } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { format } from "date-fns";
 import { fetchTransfers } from "action/transfer";
 import { fetchTopPlayers } from "action/vote";
 import ItemBody from "./item-body";
+import { FeaturedPlayerCard } from "./featured-player-card";
+import { Vibrant } from "node-vibrant/node";
 
 export default async function FeaturedPlayers() {
   const [transfersRes, topPlayersRes] = await Promise.all([
@@ -14,19 +15,36 @@ export default async function FeaturedPlayers() {
     fetchTopPlayers(),
   ]);
 
-  const transfers = transfersRes.success ? transfersRes.data : [];
+  const transfers = transfersRes.success ? transfersRes.data : undefined;
   const topPlayers = topPlayersRes.success ? topPlayersRes.data : [];
+
+  let gradient =
+    "linear-gradient(284.38deg, rgba(255, 0, 0, 0.75), rgba(0, 0, 255, 0.75))";
+
+  try {
+    const palette = await Vibrant.from(topPlayers.image).getPalette();
+
+    if (palette.Vibrant && palette.DarkVibrant) {
+      gradient = `linear-gradient(284.38deg, 
+          rgba(${palette.Vibrant.rgb.join(",")}, 0.75), 
+          rgba(${palette.DarkVibrant.rgb.join(",")}, 0.75))`;
+    }
+  } catch (error) {
+    console.log("Error getting color palette", error);
+  }
 
   return (
     <main className="min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-[350px,2fr] gap-8">
           <div>
             <h2 className="text-2xl font-bold text-purple-900 mb-6">
               Featured Player
             </h2>
             {topPlayers ? (
-              <FeaturedPlayerCard player={topPlayers} />
+              <div className="px-2">
+                <FeaturedPlayerCard player={topPlayers} gradient={gradient} />
+              </div>
             ) : (
               <Card className="p-6 text-center text-gray-500">
                 No featured player available.
@@ -47,74 +65,38 @@ export default async function FeaturedPlayers() {
   );
 }
 
-function FeaturedPlayerCard({ player }) {
+function TransferCard({ news }) {
   return (
-    <Card className="overflow-hidden">
-      <div className="relative h-[300px] bg-gradient-to-br from-blue-400 to-purple-500">
-        <Image
-          src={player.image || "/placeholder.svg"}
-          alt={player.player_id}
-          fill
-          className="object-contain"
-        />
-        {/* <div className="absolute top-4 left-4">
-          <Image
-            src={player.team_ || "/placeholder.svg"}
-            alt={player.team_name}
-            width={60}
-            height={60}
-            className="bg-white rounded-full p-1"
-          />
-        </div> */}
-      </div>
-      <CardHeader>
-        <CardTitle className="text-3xl font-bold text-purple-900">
-          {player.player_id}
-        </CardTitle>
-        <Badge variant="secondary" className="text-sm">
-          {player.position}
-        </Badge>
-      </CardHeader>
-      <CardContent>
-        <div className="grid sm:grid-cols-2 gap-4 text-sm mb-6">
-          {[
-            { label: "Date of Birth", value: player.date_birth },
-            { label: "Age", value: player.age },
-            { label: "Height", value: player.height },
-            { label: "Weight", value: player.weight },
-            { label: "Nationality", value: player.nationality },
-            { label: "Team", value: player.team_name },
-          ].map((item) => (
-            <div key={item.label}>
-              <p className="text-gray-500 mb-1">{item.label}</p>
-              <p className="font-medium text-purple-900">{item.value}</p>
-            </div>
-          ))}
-        </div>
-
-        {[
-          { label: "Preferred Foods", value: player.preferred_foods },
-          { label: "Coach's Perspective", value: player.coach_perspective },
-          { label: "Playing History", value: player.playing_history },
-        ].map((item) => (
-          <div key={item.label} className="mb-4">
-            <p className="text-gray-500 mb-1">{item.label}</p>
-            <p className="text-sm text-purple-900">{item.value}</p>
-          </div>
-        ))}
-
-        <Button variant="outline" asChild className="mt-4">
-          <a
-            href={player.youtube_link}
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="block md:hidden transition-transform hover:-translate-y-0.5">
+      <Card className="overflow-hidden h-full">
+        <div className="flex md:flex-col items-center h-full gap-4 p-4">
+          <div
+            className="relative w-32 h-32 flex-shrink-0 rounded-md flex items-center justify-center"
+            aria-hidden="true"
           >
-            Watch Highlights
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </a>
-        </Button>
-      </CardContent>
-    </Card>
+            <Image
+              src={news.image || "/placeholder.svg"}
+              alt=""
+              width={280}
+              height={280}
+              className="object-contain"
+              loading="lazy"
+            />
+          </div>
+          <div className="min-w-0">
+            <div
+              className="text-xs uppercase tracking-wider mb-1"
+              aria-hidden="true"
+            >
+              Transfer
+            </div>
+            <h3 className="font-semibold text-base line-clamp-2">
+              {news.title}
+            </h3>
+          </div>
+        </div>
+      </Card>
+    </div>
   );
 }
 
@@ -173,44 +155,7 @@ function LatestTransfers({ transfers }) {
         <ScrollArea className="h-[900px] w-full rounded-md">
           <div className="space-y-4 pr-4">
             {transfers && transfers.length > 0 ? (
-              transfers.map((item, i) => (
-                <Card
-                  key={i}
-                  className="overflow-hidden hover:shadow-md transition-all duration-300 hover:translate-x-1 cursor-pointer"
-                >
-                  <div className="flex flex-col">
-                    <div className="relative h-48 w-full">
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        className="object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <div className="inline-block px-2 py-1 bg-purple-100 text-purple-900 text-xs font-medium rounded-full mb-2">
-                          Transfers
-                        </div>
-                        <h3 className="text-white font-semibold text-lg line-clamp-2">
-                          {item.title}
-                        </h3>
-                      </div>
-                    </div>
-                    <div className="p-4 space-y-3 bg-white">
-                      <ItemBody
-                        className="text-sm text-gray-600 line-clamp-2 prose prose-sm"
-                        body={item.body}
-                      />
-                      <div className="flex items-center gap-2 text-sm text-gray-500">
-                        <Calendar className="h-3 w-3" />
-                        <time dateTime={item.created_at} className="text-xs">
-                          {format(new Date(item.created_at), "MMM d, h:mm a")}
-                        </time>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              ))
+              transfers.map((item, i) => <TransferCard key={i} news={item} />)
             ) : (
               <Card className="p-6 text-center text-gray-500">
                 No transfer news available.
