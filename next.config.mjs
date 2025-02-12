@@ -14,6 +14,7 @@ const nextConfig = {
       { protocol: "https", hostname: "flagcdn.com" },
       { protocol: "https", hostname: "via.placeholder.com" },
       { protocol: "https", hostname: "placehold.co" },
+      { protocol: "https", hostname: "resources.premierleague.com" },
     ],
   },
 };
