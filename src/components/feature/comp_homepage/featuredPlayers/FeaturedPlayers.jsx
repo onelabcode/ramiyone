@@ -37,7 +37,11 @@ export default async function FeaturedPlayers({ activeTab }) {
     <main className="min-h-screen">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-[350px,2fr] gap-8">
-          <div className={`${activeTab === "featured" && "block"} md:hidden`}>
+          <div
+            className={`${
+              activeTab === "featured" ? "block md:hidden" : "hidden md:block"
+            }`}
+          >
             <h2 className="text-2xl font-bold text-purple-900 mb-6">
               Featured Player
             </h2>
