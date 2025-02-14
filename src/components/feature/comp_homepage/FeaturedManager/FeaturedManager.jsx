@@ -98,8 +98,8 @@ export default async function FeaturedManager({ activeTab }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 p-4 md:p-0 gap-8">
           <div
             className={`lg:col-span-3 ${
-              activeTab === "featured" && "block"
-            } md:hidden`}
+              activeTab === "featured" ? "block md:hidden" : "hidden md:block"
+            }`}
           >
             <h2 className="text-2xl font-bold text-[#37003c] mb-4">
               Featured Manager
