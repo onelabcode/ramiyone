@@ -3,7 +3,7 @@ import { NewsCarousel } from "./Tutor/NewsCarousel";
 import { NewsCard } from "./Tutor/NewsCard";
 import { fetchBlogs } from "action/blog";
 
-export async function FeaturedSection() {
+export async function FeaturedSection({ activeTab }) {
   let blogs = [];
   const res = await fetchBlogs();
   if (res.success) {
@@ -11,7 +11,11 @@ export async function FeaturedSection() {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50/50">
+    <section
+      className={`py-16 bg-gradient-to-b from-white to-gray-50/50 ${
+        activeTab === "featured" && "hidden"
+      } md:block`}
+    >
       <div className="px-4">
         <NewsHeader />
         <div className="max-w-[1400px] mx-auto">
