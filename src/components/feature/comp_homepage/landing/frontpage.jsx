@@ -12,8 +12,9 @@ import { FeaturedSection } from "../Blogsection";
 import FeaturedPlayers from "../featuredPlayers/FeaturedPlayers";
 import FeaturedManager from "../FeaturedManager/FeaturedManager";
 import { SponsorCarousel } from "../BrandFooter/sponsor-carousel";
+import FluidTabs from "@/components/fluid-tabs";
 
-const Frontpage = async () => {
+const Frontpage = async ({ activeTab }) => {
   let teams = [];
   const res = await getTeams();
   if (res.success) {
@@ -112,12 +113,13 @@ const Frontpage = async () => {
           </div>
         </div>
       </div>
+      <FluidTabs />
 
-      <TutorialSection />
-      <FeaturedSection />
-      <FeaturedPlayers />
+      <TutorialSection activeTab={activeTab} />
+      <FeaturedSection activeTab={activeTab} />
+      <FeaturedPlayers activeTab={activeTab} />
+      <FeaturedManager activeTab={activeTab} />
 
-      <FeaturedManager />
       <SponsorCarousel />
       {/* <VotePage /> */}
 

@@ -65,7 +65,7 @@ function NewsCard({ news }) {
   );
 }
 
-export default async function FeaturedManager() {
+export default async function FeaturedManager({ activeTab }) {
   const [clubNewsRes, featuredManagerRes] = await Promise.all([
     fetchAllClubNews(),
     fetchLatestFeaturedManager(),
@@ -95,9 +95,13 @@ export default async function FeaturedManager() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-[1400px] mx-auto p-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <div className="lg:col-span-3">
-            <h2 className="text-[1.75rem] font-bold text-[#37003c] mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-12 p-4 md:p-0 gap-8">
+          <div
+            className={`lg:col-span-3 ${
+              activeTab === "featured" && "block"
+            } md:hidden`}
+          >
+            <h2 className="text-2xl font-bold text-[#37003c] mb-4">
               Featured Manager
             </h2>
             {featuredManager ? (
@@ -111,7 +115,11 @@ export default async function FeaturedManager() {
               </Card>
             )}
           </div>
-          <div className="lg:col-span-9">
+          <div
+            className={`lg:col-span-9 ${
+              activeTab === "featured" && "hidden"
+            } md:block`}
+          >
             <ClubNews clubNews={clubNews} />
           </div>
         </div>

@@ -9,7 +9,7 @@ import ItemBody from "./item-body";
 import { FeaturedPlayerCard } from "./featured-player-card";
 import { Vibrant } from "node-vibrant/node";
 
-export default async function FeaturedPlayers() {
+export default async function FeaturedPlayers({ activeTab }) {
   const [transfersRes, topPlayersRes] = await Promise.all([
     fetchTransfers(),
     fetchTopPlayers(),
@@ -37,7 +37,7 @@ export default async function FeaturedPlayers() {
     <main className="min-h-screen">
       <div className="max-w-[1400px] mx-auto">
         <div className="grid lg:grid-cols-[350px,2fr] gap-8">
-          <div>
+          <div className={`${activeTab === "featured" && "block"} md:hidden`}>
             <h2 className="text-2xl font-bold text-purple-900 mb-6">
               Featured Player
             </h2>
@@ -53,7 +53,7 @@ export default async function FeaturedPlayers() {
           </div>
 
           {/* Latest Transfers */}
-          <div>
+          <div className={`${activeTab === "featured" && "hidden"} md:block`}>
             <h2 className="text-2xl font-bold text-purple-900 mb-6">
               Transfer News
             </h2>

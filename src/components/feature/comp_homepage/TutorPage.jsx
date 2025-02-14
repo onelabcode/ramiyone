@@ -3,7 +3,7 @@ import TutorCard from "./Tutor/TutorCard";
 import { CardCarousel } from "./Tutor/CardCarousel";
 import { getTutors } from "action/tutor";
 
-export default async function TutorialSection() {
+export default async function TutorialSection({ activeTab }) {
   let tutors = [];
   const res = await getTutors();
   if (res.success) {
@@ -11,7 +11,11 @@ export default async function TutorialSection() {
   }
 
   return (
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      className={`mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ${
+        activeTab === "featured" && "hidden"
+      } md:block`}
+    >
       <div className="mt-16">
         <div className="flex items-center justify-between mb-8">
           <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">

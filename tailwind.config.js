@@ -62,6 +62,11 @@ module.exports = {
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
+        radialGradient: {
+          "0%": { backgroundPosition: "50% 50%" },
+          "50%": { backgroundPosition: "100% 100%" },
+          "100%": { backgroundPosition: "50% 50%" },
+        },
         "accordion-down": {
           from: {
             height: "0",
@@ -82,6 +87,7 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        radialGradient: "radialGradient 6s infinite ease-in-out",
       },
     },
   },
