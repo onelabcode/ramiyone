@@ -19,6 +19,25 @@ export const getAllPlayers = async () => {
   }
 };
 
+export const getPlayersFilters = async (filters) => {
+  console.log(filters);
+  try {
+    const res = await fetchWithToken(
+      `${API_URL}/api/player/filter?${filters}`,
+      {
+        method: "GET",
+      }
+    );
+    return handleResponse(res);
+  } catch (error) {
+    return {
+      success: false,
+      statusCode: 700,
+      data: error,
+    };
+  }
+};
+
 export const getPlayerById = async (id) => {
   try {
     const res = await fetchWithToken(`${API_URL}/api/player/each/${id}`, {
