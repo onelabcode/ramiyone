@@ -121,6 +121,8 @@ export default function TransferNewsPage() {
     }
   };
 
+  console.log(transfers);
+
   return (
     <div className="container mx-auto py-8 px-4">
       <div className="flex items-center gap-3 mb-10 bg-gradient-to-r from-purple-50 to-transparent p-6 rounded-lg">
@@ -184,8 +186,17 @@ export default function TransferNewsPage() {
 
                   <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
                     <Calendar className="h-4 w-4" />
-                    <time dateTime={transfer.created_at}>
-                      {format(new Date(transfer.created_at), "MMM d, h:mm a")}
+                    <time
+                      dateTime={
+                        transfer?.created_at || new Date().toISOString()
+                      }
+                    >
+                      {format(
+                        new Date(
+                          transfer?.created_at || new Date().toISOString()
+                        ),
+                        "MMM d, h:mm a"
+                      )}
                     </time>
                   </div>
                 </CardContent>
